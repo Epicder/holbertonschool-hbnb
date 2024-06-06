@@ -50,7 +50,7 @@ class City(BasicData):
     def __init__(self, name, country_code):
         super.__init__()
         self.name = name
-        self.county_code
+        self.county_code = country_code
         
 
 class System:
