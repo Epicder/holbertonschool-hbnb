@@ -19,7 +19,13 @@ class Users(Basic_data):
         self.first_name = first_name
         self.last_name = last_name
         
+    def create_review(user_id, place_id, rating, comment):
+        pass
+    
+    def create_place():
+        pass
 
+        
 class Reviews(Basic_data):
     def __init__(self, rating, comment):
         super.__init__()
@@ -27,26 +33,28 @@ class Reviews(Basic_data):
         self.comment = comment
 
 class Place(Basic_data):
-    def __init__(self, host_id, name, description, rooms, bathrooms, max_guests, price_per_night, latitude, longitude, city_id, ammenities_dict):
+    def __init__(self, host_id, name, description, rooms, bathrooms,\
+                max_guests, price_per_night, latitude, longitude, city_id, amenities_dict):
         super.__init__()
-        self.host_id = self.host_id
-        self.name = self.name
+        self.host_id = host_id
+        self.name = name
         self.description = description
-        self.romms = rooms
+        self.rooms = rooms
         self.bathroom = bathrooms
         self.max_guests = max_guests
         self.price_per_night = price_per_night
         self.latitude = latitude
-        self.longitude = longitue
+        self.longitude = longitude
         self.city_id = city_id
         self.amenities_dict = amenities_dict
+        self.reviews = {}
 
 class Country:
     def __init__(self, code, name):
         self.code = code
         self.code = name
 
-class City(BasicData):
+class City(Basic_data):
     def __init__(self, name, country_code):
         super.__init__()
         self.name = name
