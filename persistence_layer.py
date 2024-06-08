@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from abc import ABC, abstractmethod
-from business_logic_layer import Users, Reviews, Place, Amenities
+from business_logic_layer import Users, Reviews, Place, Amenities, Country, City
 
 class IPersistenceManager(ABC):
        @abstractmethod
@@ -10,6 +10,10 @@ class IPersistenceManager(ABC):
 
        @abstractmethod
        def get(self, instance_id, instance_type):
+           pass
+       
+       @abstractmethod
+       def get_all(self, instance_type):
            pass
 
        @abstractmethod
@@ -26,7 +30,9 @@ class DataManager(IPersistenceManager):
         Users: [],
         Reviews: [],
         Place : [],
-        Amenities:[]
+        Amenities: [],
+        Country: [],
+        City: []
         }
         
     def save(self, instance):
@@ -46,7 +52,12 @@ class DataManager(IPersistenceManager):
             print(f"Invalid id: {instance_id}")
         else:
             print(f"Invalid Object: {instance_type}")
-        
+    
+    def get_all(self, instance_type):
+        if instance_type in self.data_lists:
+            return self.data_lists[instance_type]
+        else:
+            return print(f"Invalid Object: {instance_type}")
     
     def delete(self, instance_id, instance_type):
         if instance_type in self.data_lists:
