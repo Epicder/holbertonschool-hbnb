@@ -6,7 +6,7 @@ from datetime import datetime
 
 class Basic_data(ABC):
     def __init__(self):
-        self.id = uuid.uuid4() # uuid4 Esta generando un ID random, hay que ver de que genere una lista de ids consecutiva para cada clase
+        self.id = uuid.uuid4()
         self.created_at = datetime.now()
         self.updated_at = datetime.now()
 
@@ -55,7 +55,7 @@ class City(Basic_data):
 
 class Amenities:
     def __init__(self, name):
-        self.id = uuid.uuid4() # uuid4 Esta generando un ID random, hay que ver de que genere una lista de ids consecutiva para cada clase
+        self.id = uuid.uuid4()
         self.name = name
 
 class System:
@@ -117,7 +117,17 @@ class System:
         new_amenities = Amenities()
         new_amenities.id = data_amenities.get('id')
         new_amenities = data_amenities.get('name')
+        
         return new_amenities
+    
+    def create_user(data_user):
+        new_user = Users()
+        new_user.email = data_user.get('email')
+        new_user.password = data_user.get('password')
+        new_user.first_name = data_user.get('first_name')
+        new_user.last_name = data_user.get('last_name')
+        
+        return new_user
         
         
     """
