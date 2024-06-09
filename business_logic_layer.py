@@ -108,23 +108,30 @@ class System:
             if not -180 <= new_plance.longitude <= 180:
                     raise ValueError("Please enter a longitude between -180 and 180")
         except Exception:
-                print("Error creating a place, please try again!")
+            print("Error creating a place, please try again!")
         return new_plance
 
     def create_amenities(data_amenities):
-        new_amenities = Amenities()
-        new_amenities.id = data_amenities.get('id')
-        new_amenities = data_amenities.get('name')
-
+        try:
+            new_amenities = Amenities(
+                new_amenities.id = data_amenities.get('id')
+                new_amenities = data_amenities.get('name')
+                )
+        except Exception:
+            print("Error creaing amenities, please try again!")
         return new_amenities
 
     def create_user(data_user):
-        new_user = Users()
-        new_user.email = data_user.get('email')
-        new_user.password = data_user.get('password')
-        new_user.first_name = data_user.get('first_name')
-        new_user.last_name = data_user.get('last_name')
-
+        try:
+            new_user = Users(
+                new_user.email = data_user.get('email')
+                new_user.password = data_user.get('password')
+                new_user.first_name = data_user.get('first_name')
+                new_user.last_name = data_user.get('last_name')
+                )
+            if new_user.email
+        except Exception:
+            print("Error creating user, please try again")
         return new_user
     
     
