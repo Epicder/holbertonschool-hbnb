@@ -4,35 +4,20 @@ from flask import Flask, request, jsonify, abort
 from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 
+from blueprints.user import user_bp
+from blueprints.country import country_bp
+from blueprints.place import place_bp
+from blueprints.review import review_bp
+from blueprints.amenity import amenity_bp
 
 app = Flask(__name__)
 auth = HTTPBasicAuth()
 
-def validate_email(email):
-    pass
-
-def find_user(user_id):
-    pass
-
-@app.route('/users', methods=['POST'])
-def create_user():
-    pass
-
-@app.route('/users', methods=['GET'])
-def get_users():
-    pass
-
-@app.route('/users/<int:user_id>', methods=['GET'])
-def get_user():
-    pass
-
-@app.route('/users/<int:user_id>', methods=['PUT'])
-def update_user(user_id):
-    pass
-
-@app.route('/users/<int:user_id>', methods=['DELETE'])
-def delete_user(user_id):
-    pass
+app.register_blueprint(user_bp, url_prefix='/users')
+app.register_blueprint(user_bp, url_prefix='/countries')
+app.register_blueprint(user_bp, url_prefix='/places')
+app.register_blueprint(user_bp, url_prefix='/reviews')
+app.register_blueprint(user_bp, url_prefix='/amenities')
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
