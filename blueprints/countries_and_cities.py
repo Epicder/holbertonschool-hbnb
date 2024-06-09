@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+from flask import Blueprint
+
 country_bp = Blueprint('country', __name__)
 
 @country_bp.route('/', methods=['GET'])
