@@ -3,7 +3,9 @@
 from abc import ABC
 import uuid
 from datetime import datetime
-from persitence_layer import DataManager
+from persistence_layer import DataManager
+
+data_manager = DataManager()
 
 class Basic_data(ABC):
     def __init__(self):
@@ -69,9 +71,8 @@ class System:
                 comment = data_reviwe.get('comment'),
                 rating = data_reviwe.get('rating')
             )
-            data_manager = DataManager()
-            place = data_manager.get(data_review.get('place_id'), Place)
-            if place and place.host_id == data_review.get('user_id'):
+            place = data_manager.get(new_review._place_id, Place) # Cambio aca
+            if place and place.host_id == new_review._user_id:
                 raise ValueError("User cannot review their own place")
             if new_review.rating <= 0:
                 raise ValueError("Rating must be a number from 1 to 5")
