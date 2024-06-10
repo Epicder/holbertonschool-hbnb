@@ -69,6 +69,10 @@ class System:
                 comment = data_reviwe.get('comment'),
                 rating = data_reviwe.get('rating')
             )
+            data_manager = DataManager()
+            place = data_manager.get(data_review.get('place_id'), Place)
+            if place and place.host_id == data_review.get('user_id'):
+                raise ValueError("User cannot review their own place")
             if new_review.rating <= 0:
                 raise ValueError("Rating must be a number from 1 to 5")
             if new_review.comment == "":
