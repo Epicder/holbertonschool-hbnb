@@ -114,7 +114,7 @@ class System:
     def create_amenities(data_amenities):
         try:
             new_amenities = Amenities(
-                new_amenities.id = data_amenities.get('id')
+                id = data_amenities.get('id'),
                 new_amenities = data_amenities.get('name')
                 )
         except Exception:
@@ -124,12 +124,13 @@ class System:
     def create_user(data_user):
         try:
             new_user = Users(
-                new_user.email = data_user.get('email')
-                new_user.password = data_user.get('password')
-                new_user.first_name = data_user.get('first_name')
-                new_user.last_name = data_user.get('last_name')
+                email = data_user.get('email'),
+                password = data_user.get('password'),
+                first_name = data_user.get('first_name'),
+                last_name = data_user.get('last_name')
                 )
-            if new_user.email
+            if new_user.email == "":
+                raise
         except Exception:
             print("Error creating user, please try again")
         return new_user
