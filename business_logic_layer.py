@@ -31,7 +31,7 @@ class Reviews(Basic_data):
 
 class Place(Basic_data):
     def __init__(self, host_id, name, description, rooms, bathrooms,\
-                max_guests, price_per_night, latitude, longitude, city_id, amenities_list):
+                max_guests, price_per_night, latitude, longitude, city_id):# Falta el dato que le pasamos al amenity 
         super().__init__()
         self._host_id = host_id
         self._name = name
@@ -43,7 +43,7 @@ class Place(Basic_data):
         self._latitude = latitude
         self._longitude = longitude
         self._city_id = city_id
-        self._amenities_list = amenities_list
+        self._amenities_list = #falta el dato, e implemantear en create amenity
 
 class Country:
     def __init__(self, code, name):
@@ -117,11 +117,10 @@ class System:
             print("Error creating a place, please try again!")
         return new_plance
 
-    def create_amenities(data_amenities):
+    def create_amenities(data_amenities):# Hay que arreglarlo
         try:
             new_amenities = Amenities(
-                id = data_amenities.get('id'),
-                new_amenities = data_amenities.get('name')
+                name_amenity = data_amenities.get('name')
                 )
         except Exception:
             print("Error creaing amenities, please try again!")
