@@ -70,4 +70,13 @@ class DataManager(IPersistenceManager):
         
     
     def update(self, instance):
-       pass
+       instance_type = type(instance)
+       if instance_type in self.data_lists:
+           instance_list = self.data_lists[instance_type]
+           for obj_id in instance_list:
+               if obj_id.id == instance.id:
+                   instance_list[obj_id] = instance
+                   self.data_lists[instance_type] = instance_list
+                   break
+       else:
+            print(f"Invalid Objetct: {instance_type}")
