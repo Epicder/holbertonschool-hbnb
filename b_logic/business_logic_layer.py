@@ -9,57 +9,57 @@ data_manager = DataManager()
 
 class Basic_data(ABC):
     def __init__(self):
-        self._id = uuid.uuid4()
-        self._created_at = datetime.now()
-        self._updated_at = datetime.now()
+        self.id = uuid.uuid4()
+        self.created_at = datetime.now()
+        self.updated_at = datetime.now()
 
 class Users(Basic_data):
     def __init__(self, email, password, first_name, last_name):
         super().__init__()
-        self._email = email
-        self._password = password
-        self._first_name = first_name
-        self._last_name = last_name
+        self.email = email
+        self.password = password
+        self.first_name = first_name
+        self.last_name = last_name
 
 class Reviews(Basic_data):
     def __init__(self, rating, user_id, place_id, comment):
         super().__init__()
-        self._rating = rating
-        self._user_id = user_id
-        self._place_id = place_id
-        self._comment = comment
+        self.rating = rating
+        self.user_id = user_id
+        self.place_id = place_id
+        self.comment = comment
 
 class Place(Basic_data):
     def __init__(self, host_id, name, description, rooms, bathrooms,\
                 max_guests, price_per_night, latitude, longitude, city_id, amenities_list):# Falta el dato que le pasamos al amenity 
         super().__init__()
-        self._host_id = host_id
-        self._name = name
-        self._description = description
-        self._rooms = rooms
-        self._bathroom = bathrooms
-        self._max_guests = max_guests
-        self._price_per_night = price_per_night
-        self._latitude = latitude
-        self._longitude = longitude
-        self._city_id = city_id
-        self._amenities_list = amenities_list
+        self.host_id = host_id
+        self.name = name
+        self.description = description
+        self.rooms = rooms
+        self.bathroom = bathrooms
+        self.max_guests = max_guests
+        self.price_per_night = price_per_night
+        self.latitude = latitude
+        self.longitude = longitude
+        self.city_id = city_id
+        self.amenities_list = amenities_list
 
 class Country:
     def __init__(self, code, name):
-        self._code = code
-        self._name = name
+        self.code = code
+        self.name = name
 
 class City(Basic_data):
     def __init__(self, name, country_code):
         super().__init__()
-        self._name = name
-        self._county_code = country_code
+        self.name = name
+        self.county_code = country_code
 
 class Amenities:
     def __init__(self, name):
-        self._id = uuid.uuid4()
-        self._name = name
+        self.id = uuid.uuid4()
+        self.name = name
 
 class System:
 
@@ -95,7 +95,7 @@ class System:
                         amenity = a
                         break
                 if not amenity:
-                    new_amenity = Amenities(name_amenity=amenity_name)
+                    new_amenity = Amenities(amenity_name) # Chequear
                     DataManager.data_lists[Amenities].append(new_amenity)
                     amenities_objects.append(new_amenity)
                 else:
