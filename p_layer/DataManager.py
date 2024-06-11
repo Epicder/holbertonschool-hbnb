@@ -1,29 +1,13 @@
 #!/usr/bin/python3
 
-from abc import ABC, abstractmethod
-from business_logic_layer import Users, Reviews, Place, Amenities, Country, City
+from models.reviews import Reviews
+from models.users import Users
+from models.place import Place
+from models.amenities import Amenities
+from models.country import Country
+from models.city import City
+from models.IPersistenceManager import IPersistenceManager
 
-class IPersistenceManager(ABC):
-       @abstractmethod
-       def save(self, instance):
-           pass
-
-       @abstractmethod
-       def get(self, instance_id, instance_type):
-           pass
-       
-       @abstractmethod
-       def get_all(self, instance_type):
-           pass
-
-       @abstractmethod
-       def update(self, instance):
-           pass
-
-       @abstractmethod
-       def delete(self, instance_id, instance_type):
-           pass
-       
 class DataManager(IPersistenceManager):
     def __init__(self):
         self.data_lists = {
