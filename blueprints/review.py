@@ -1,19 +1,20 @@
-#!/usr/bin/python3                                                                                                                                                                                                                                                            
-""" Quiza la implementacion de review NO es asi, tengo que ver mas blueprint para saberlo """
+#!/usr/bin/python3                                                                                                                                                                                                                                                           
+
+
 
 from flask import Blueprint
 
 review_bp = Blueprint('review', __name__)
 
-@review_bp.route('/places/<int:place_id>/', methods=['POST'])
+@review_bp.route('/places/<int:place_id>/reviews', methods=['POST'])
 def create_place_review(place_id):
     pass
 
-@review_bp.route('/users/<int:user_id>/', methods=['GET'])
+@review_bp.route('/users/<int:user_id>/reviews', methods=['GET'])
 def get_user_review(user_id):
     pass
 
-@review_bp.route('/place/<int:place_id>/', methods=['GET'])
+@review_bp.route('/place/<int:place_id>/reviews', methods=['GET'])
 def get_place_review(place_id):
     pass
 

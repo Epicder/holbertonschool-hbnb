@@ -3,7 +3,7 @@
 from abc import ABC
 import uuid
 from datetime import datetime
-from persitence_layer import DataManager
+from persistence_layer import DataManager
 
 class Basic_data(ABC):
     def __init__(self):
