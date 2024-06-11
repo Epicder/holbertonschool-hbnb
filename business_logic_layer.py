@@ -134,6 +134,8 @@ class System:
                 first_name = data_user.get('first_name'),
                 last_name = data_user.get('last_name')
                 )
+            if "@" not in new_user.email or ".com" not in new_user.email:
+                raise ValueError("Email, not valid!")
             existing_users = data_manager.get_all(Users)
             for user in existing_users:
                 if user.email == data_user.get('email'):
