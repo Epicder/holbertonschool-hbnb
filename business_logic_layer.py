@@ -43,7 +43,7 @@ class Place(Basic_data):
         self._latitude = latitude
         self._longitude = longitude
         self._city_id = city_id
-        self._amenities_list = #falta el dato, e implemantear en create amenity
+        #self._amenities_list = #falta el dato, e implemantear en create amenity
 
 class Country:
     def __init__(self, code, name):
