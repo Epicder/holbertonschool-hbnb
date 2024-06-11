@@ -4,6 +4,11 @@ from abc import ABC
 import uuid
 from datetime import datetime
 from persistence_layer import DataManager
+<<<<<<< HEAD
+=======
+
+data_manager = DataManager()
+>>>>>>> de49b76682f63ec1b72520fb07dcd66aaabbca4a
 
 class Basic_data(ABC):
     def __init__(self):
@@ -29,7 +34,7 @@ class Reviews(Basic_data):
 
 class Place(Basic_data):
     def __init__(self, host_id, name, description, rooms, bathrooms,\
-                max_guests, price_per_night, latitude, longitude, city_id, amenities_list):
+                max_guests, price_per_night, latitude, longitude, city_id):# Falta el dato que le pasamos al amenity 
         super().__init__()
         self._host_id = host_id
         self._name = name
@@ -41,7 +46,7 @@ class Place(Basic_data):
         self._latitude = latitude
         self._longitude = longitude
         self._city_id = city_id
-        self._amenities_list = amenities_list
+        #self._amenities_list = #falta el dato, e implemantear en create amenity
 
 class Country:
     def __init__(self, code, name):
@@ -69,9 +74,8 @@ class System:
                 comment = data_reviwe.get('comment'),
                 rating = data_reviwe.get('rating')
             )
-            data_manager = DataManager()
-            place = data_manager.get(data_review.get('place_id'), Place)
-            if place and place.host_id == data_review.get('user_id'):
+            place = data_manager.get(new_review._place_id, Place) # Cambio aca
+            if place and place.host_id == new_review._user_id:
                 raise ValueError("User cannot review their own place")
             if new_review.rating <= 0:
                 raise ValueError("Rating must be a number from 1 to 5")
@@ -116,11 +120,10 @@ class System:
             print("Error creating a place, please try again!")
         return new_plance
 
-    def create_amenities(data_amenities):
+    def create_amenities(data_amenities):# Hay que arreglarlo
         try:
             new_amenities = Amenities(
-                id = data_amenities.get('id'),
-                new_amenities = data_amenities.get('name')
+                name_amenity = data_amenities.get('name')
                 )
         except Exception:
             print("Error creaing amenities, please try again!")
@@ -134,6 +137,8 @@ class System:
                 first_name = data_user.get('first_name'),
                 last_name = data_user.get('last_name')
                 )
+            if "@" not in new_user.email or ".com" not in new_user.email:
+                raise ValueError("Email, not valid!")
             existing_users = data_manager.get_all(Users)
             for user in existing_users:
                 if user.email == data_user.get('email'):
