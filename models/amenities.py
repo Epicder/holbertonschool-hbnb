@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from basic_data import Basic_data
+from models.basic_data import Basic_data
 import uuid
 
 class Amenities:

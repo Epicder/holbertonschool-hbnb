@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from basic_data import Basic_data
+from models.basic_data import Basic_data
 
 class City(Basic_data):
     def __init__(self, name, country_code):

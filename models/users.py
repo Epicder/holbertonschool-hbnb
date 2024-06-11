@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from basic_data import Basic_data
+from models.basic_data import Basic_data
 
 class Users(Basic_data):
     def __init__(self, email, password, first_name, last_name):

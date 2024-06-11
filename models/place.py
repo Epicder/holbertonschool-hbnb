@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from basic_data import Basic_data
+from models.basic_data import Basic_data
 
 class Place(Basic_data):
     def __init__(self, host_id, name, description, rooms, bathrooms,\
