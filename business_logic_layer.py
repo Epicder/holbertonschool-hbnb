@@ -4,11 +4,8 @@ from abc import ABC
 import uuid
 from datetime import datetime
 from persistence_layer import DataManager
-<<<<<<< HEAD
-=======
 
 data_manager = DataManager()
->>>>>>> de49b76682f63ec1b72520fb07dcd66aaabbca4a
 
 class Basic_data(ABC):
     def __init__(self):
@@ -34,7 +31,7 @@ class Reviews(Basic_data):
 
 class Place(Basic_data):
     def __init__(self, host_id, name, description, rooms, bathrooms,\
-                max_guests, price_per_night, latitude, longitude, city_id):# Falta el dato que le pasamos al amenity 
+                max_guests, price_per_night, latitude, longitude, city_id, amenities_list):# Falta el dato que le pasamos al amenity 
         super().__init__()
         self._host_id = host_id
         self._name = name
@@ -46,7 +43,7 @@ class Place(Basic_data):
         self._latitude = latitude
         self._longitude = longitude
         self._city_id = city_id
-        #self._amenities_list = #falta el dato, e implemantear en create amenity
+        self._amenities_list = amenities_list
 
 class Country:
     def __init__(self, code, name):
@@ -87,8 +84,23 @@ class System:
         return new_review
 
     def create_place(data_place):
-
+        
         try:
+            amenities_list = data_place.get('amenities_list', [])
+            amenities_objects = []
+            for amenity_name in amenities_list:
+                amenity = None
+                for a in DataManager.data_lists[Amenities]:
+                    if a.name == amenity_name:
+                        amenity = a
+                        break
+                if not amenity:
+                    new_amenity = Amenities(name_amenity=amenity_name)
+                    DataManager.data_lists[Amenities].append(new_amenity)
+                    amenities_objects.append(new_amenity)
+                else:
+                    amenities_objects.append(amenity)
+
             new_plance = Place(
                 name = data_place.get('name'),
                 host_id = data_place.get('host_id'),
@@ -100,7 +112,7 @@ class System:
                 latitude = float(data_place.get('latitude')),
                 longitude = float(data_place.get('longitude')),
                 city_id = data_place.get('city_id'),
-                amenities_list = data_place.get('amenities_list')
+                amenities_list = amenities_objects
                 )
             if new_plance.description == "":
                 raise TypeError("The place must have a description!")
@@ -122,12 +134,13 @@ class System:
 
     def create_amenities(data_amenities):# Hay que arreglarlo
         try:
-            new_amenities = Amenities(
+            new_amenity = Amenities(
                 name_amenity = data_amenities.get('name')
                 )
+            DataManager.data_lists[Amenities].append(new_amenity)
         except Exception:
             print("Error creaing amenities, please try again!")
-        return new_amenities
+        return new_amenity
 
     def create_user(data_user):
         try:
