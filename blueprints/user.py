@@ -14,12 +14,13 @@ def create_user():
     data = request.get_json()
     new_user = System.create_user(data)
     D_manager.save(new_user)
-    return jsonify({"Mensajeh":"Quedo guardao"}), 201
+    new_user.id = 123123
+    return jsonify({"Message":"User succsessfuly created."}), 201
     
 
 @user_bp.route('/users', methods=['GET'])
 def getall_users():
-    return "tamoaca"
+    pass
 
 @user_bp.route('/users/<int:user_id>', methods=['GET'])
 def get_user():
@@ -31,4 +32,8 @@ def update_user(user_id):
 
 @user_bp.route('/users/<int:user_id>', methods=['DELETE'])
 def delete_user(user_id):
-    pass
+    user = D_manager.get(user_id, 'User')
+    if not user:
+        return jsonify({"Message": "User not found"}), 404
+    D_manager.delete(user_id, 'User')
+    return jsonify({"Message":"User successfully deleted"}), 200

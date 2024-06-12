@@ -2,7 +2,7 @@
 
 from flask import Blueprint, request, jsonify
 from b_logic.system import System
-from p_layer import DataManager
+from p_layer.DataManager import DataManager
 
 amenity_bp = Blueprint('amenity', __name__)
 D_manager = DataManager()
@@ -13,7 +13,7 @@ def create_amenity():
     data = request.get_json()
     new_amen = System.create_amenities(data)
     D_manager.save(new_amen)
-    return jsonify({"Ameniti":"Quedo guardao"}), 201
+    return jsonify({"Message":"Amenity successfully created."}), 201
 
 @amenity_bp.route('/', methods=['GET'])
 def get_amenities():
