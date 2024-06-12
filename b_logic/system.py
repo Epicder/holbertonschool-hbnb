@@ -4,6 +4,7 @@ from models.reviews import Reviews
 from models.users import Users
 from models.place import Place
 from models.amenities import Amenities
+from models.city import City
 from p_layer.DataManager import DataManager
 
 D_manager = DataManager()
@@ -109,5 +110,7 @@ class System:
     
     def create_city(data_city):
         new_city = City(
-            self.name = data_city.get('name')
+            name = data_city.get('name'),
+            country_code = data_city.get('country_code')
         )
+        return new_city
