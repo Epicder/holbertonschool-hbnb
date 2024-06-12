@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 from flask import Blueprint, request, jsonify, abort
-#from persistence_layer import DataManager
 from models.users import Users
 from b_logic.system import System
 from p_layer.DataManager import DataManager
@@ -9,16 +8,15 @@ import json
 
 
 user_bp = Blueprint('user', __name__)
-
+D_man = DataManager()
 
 @user_bp.route('/users', methods=['POST'])
 def create_user():
-    #data = request.get_json()
-    #data_user = json.loads(data)
-    #new_user = Users()
-    #new_user = System.create_user(data_user)
-    #DataManager.save(new_user)
-    pass
+    data = request.get_json()
+    new_user = System.create_user(data)
+    D_man.save(new_user)
+    return jsonify(D_man.get_all(new_user))
+    
 
 @user_bp.route('/users', methods=['GET'])
 def getall_users():
