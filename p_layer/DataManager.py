@@ -1,11 +1,5 @@
 #!/usr/bin/python3
 
-from models.reviews import Reviews
-from models.users import Users
-from models.place import Place
-from models.amenities import Amenities
-from models.country import Country
-from models.city import City
 from models.IPersistenceManager import IPersistenceManager
 
 class DataManager(IPersistenceManager):

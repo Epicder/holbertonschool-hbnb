@@ -1,8 +1,12 @@
 #!/usr/bin/python3
 
-from flask import Blueprint
+from flask import Blueprint, request, jsonify
+from b_logic.system import System
+from p_layer import DataManager
 
 country_bp = Blueprint('country', __name__)
+D_manager = DataManager()
+
 
 @country_bp.route('/', methods=['GET'])
 def get_countries():

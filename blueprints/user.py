@@ -4,18 +4,17 @@ from flask import Blueprint, request, jsonify, abort
 from models.users import Users
 from b_logic.system import System
 from p_layer.DataManager import DataManager
-import json
 
 
 user_bp = Blueprint('user', __name__)
-D_man = DataManager()
+D_manager = DataManager()
 
 @user_bp.route('/users', methods=['POST'])
 def create_user():
     data = request.get_json()
     new_user = System.create_user(data)
-    D_man.save(new_user)
-    return jsonify(D_man.get_all(new_user))
+    D_manager.save(new_user)
+    return jsonify({"Mensajeh":"Quedo guardao"}), 201
     
 
 @user_bp.route('/users', methods=['GET'])

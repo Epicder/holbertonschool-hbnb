@@ -6,20 +6,20 @@ from models.place import Place
 from models.amenities import Amenities
 from p_layer.DataManager import DataManager
 
-data_manager = DataManager()
+D_manager = DataManager()
 
 class System:
 
-    def create_review(data_reviwe):
+    def create_review(place_id, data_review):
         try:
             new_review = Reviews(
-                user_id = data_reviwe.get('user_id'),
-                place_id = data_reviwe.get('place_id'),
-                comment = data_reviwe.get('comment'),
-                rating = data_reviwe.get('rating')
+                user_id = data_review.get('user_id'),
+                place_id = place_id,
+                comment = data_review.get('comment'),
+                rating = data_review.get('rating')
             )
-            place = data_manager.get(new_review._place_id, Place) # Cambio aca
-            if place and place.host_id == new_review._user_id:
+            place = D_manager.get(place_id, Place)
+            if place and place.get('host_id') == new_review.user_id:
                 raise ValueError("User cannot review their own place")
             if new_review.rating <= 0:
                 raise ValueError("Rating must be a number from 1 to 5")
@@ -37,16 +37,16 @@ class System:
             amenities_objects = []
             for amenity_name in amenities_list:
                 amenity = None
-                for a in DataManager.data_lists[Amenities]:
-                    if a.name == amenity_name:
+                for a in DataManager.data_lists['Amenities']:
+                    if a.get('name') == amenity_name:
                         amenity = a
                         break
                 if not amenity:
                     new_amenity = Amenities(amenity_name) # Chequear
-                    DataManager.data_lists[Amenities].append(new_amenity)
-                    amenities_objects.append(new_amenity)
+                    DataManager.data_lists['Amenities'].append(new_amenity.__dict__)
+                    amenities_objects.append(new_amenity.__dict__)
                 else:
-                    amenities_objects.append(amenity)
+                    amenities_objects.append(amenity.__dict__)
 
             new_plance = Place(
                 name = data_place.get('name'),
@@ -84,7 +84,7 @@ class System:
             new_amenity = Amenities(
                 name_amenity = data_amenities.get('name')
                 )
-            DataManager.data_lists[Amenities].append(new_amenity)
+            DataManager.data_lists['Amenities'].append(new_amenity.__dict__)
         except Exception:
             print("Error creaing amenities, please try again!")
         return new_amenity
@@ -99,9 +99,9 @@ class System:
                 )
             if "@" not in new_user.email or ".com" not in new_user.email:
                 raise ValueError("Email, not valid!")
-            existing_users = data_manager.get_all(Users)
+            existing_users = D_manager.get_all('Users')
             for user in existing_users:
-                if user.email == data_user.get('email'):
+                if user.get('email') == data_user.get('email'):
                     raise ValueError("Email already exist!")
         except Exception:
             print("Error creating user, please try again")

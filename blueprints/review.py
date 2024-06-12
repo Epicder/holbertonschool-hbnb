@@ -1,14 +1,19 @@
 #!/usr/bin/python3                                                                                                                                                                                                                                                           
 
 
-
-from flask import Blueprint
+from flask import Blueprint, request, jsonify
+from b_logic.system import System
+from p_layer import DataManager
 
 review_bp = Blueprint('review', __name__)
+D_manager = DataManager()
 
 @review_bp.route('/places/<int:place_id>/reviews', methods=['POST'])
 def create_place_review(place_id):
-    pass
+    data = request.get_json()
+    new_review = System.create_review(place_id, data)
+    D_manager.save(new_review)
+    return jsonify({"Reviu":"Quedo guardao"}), 201
 
 @review_bp.route('/users/<int:user_id>/reviews', methods=['GET'])
 def get_user_review(user_id):
