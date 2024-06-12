@@ -106,3 +106,8 @@ class System:
         except Exception:
             print("Error creating user, please try again")
         return new_user
+    
+    def create_city(data_city):
+        new_city = City(
+            self.name = data_city.get('name')
+        )

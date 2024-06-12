@@ -13,12 +13,12 @@ class DataManager(IPersistenceManager):
         'Country': [],
         'City': []
         }
-    try:
-        with open('data_base.json', encoding="utf-8") as file:
-            self.data_lists = json.load(file)
-    except FileNotFoundError:
-        with open('data_base.json', encoding="utf-8") as file:
-            file.write(json.dumps(self.data_lists))
+        try:
+            with open('data_base.json', encoding="utf-8") as file:
+                self.data_lists = json.load(file)
+        except FileNotFoundError:
+            with open('data_base.json', 'w', encoding="utf-8") as file:
+                file.write(json.dumps(self.data_lists))
 
     def save(self, instance):
         instance_name = instance.__class__.__name__
