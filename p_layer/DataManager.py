@@ -52,19 +52,13 @@ class DataManager(IPersistenceManager):
         else:
             return print(f"Invalid Object: {instance_name}")
     
-    def delete(self, instance_id, instance_type):
-        instance_name = instance_type.__class__.__name__
+    def delete(self, instance_id, instance):
+        instance_name = instance.__class__.__name__
         if instance_name in self.data_lists:
             instance_list = self.data_lists[instance_name]
-<<<<<<< HEAD
             for instance in instance_list:
                 if instance.get('get') == instance_id:
                     self.data_lists[instance_name].remove(instance)
-=======
-            for instance_type in instance_list:
-                if instance_type.id == instance_id:
-                    self.data_lists[instance_name].remove(instance_type)
->>>>>>> refs/remotes/origin/main
         else:
             print(f"Invalid Objetct: {instance_name}")
         
