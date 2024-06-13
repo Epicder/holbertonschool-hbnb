@@ -1,1 +1,18 @@
-{"Users": [{"id": 123123, "created_at": "2024-06-13T10:40:00.276028", "updated_at": "2024-06-13T10:40:00.276044", "email": "jane@example.com", "password": null, "first_name": null, "last_name": null}, {"id": "ec46a9e7-7292-4883-8f5a-4399f682dc64", "created_at": "2024-06-13T10:40:20.719061", "updated_at": "2024-06-13T10:40:20.719082", "email": "jane@example.com", "password": null, "first_name": null, "last_name": null}], "Reviews": [], "Place": [], "Amenities": [], "Country": [], "City": []}
+{
+    "Users": [
+        {
+            "id": "fee042bd-afab-473c-9176-947b139b6237",
+            "created_at": "2024-06-13T17:34:19.506280",
+            "updated_at": "2024-06-13T17:34:19.506305",
+            "email": "ejemplo@culo.com",
+            "password": "contrase\u00f1a123",
+            "first_name": "Juan",
+            "last_name": "P\u00e9rez"
+        }
+    ],
+    "Reviews": [],
+    "Place": [],
+    "Amenities": [],
+    "Country": [],
+    "City": []
+}

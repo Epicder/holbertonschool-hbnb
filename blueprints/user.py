@@ -3,23 +3,35 @@
 from flask import Blueprint, request, jsonify, abort
 from models.users import Users
 from b_logic.system import System
-from p_layer.DataManager import DataManager
+from p_layer import D_manager
 
 
 user_bp = Blueprint('user', __name__)
-D_manager = DataManager()
+
+print(f"{D_manager = }, {hex(id(D_manager)) = }")
 
 @user_bp.route('/users', methods=['POST'])
 def create_user():
     data = request.get_json()
+    if "@" not in data.get('email') or ".com" not in data.get('email'):
+        raise ValueError("Email, not valid!")
+    if not  data.get('password'):
+        raise ValueError("Password not valid, try a new one!")
+    if not data.get('first_name'):
+        raise ValueError("First Name not valid, try a new one!")
+    if not data.get('last_name'):
+        raise ValueError("Last Name not valid, try a new one!")
+    # print(D_manager.data_lists)
     new_user = System.create_user(data)
+
     D_manager.save(new_user)
+
     return jsonify({"Message":"User succsessfuly created."}), 201
     
 
 @user_bp.route('/users', methods=['GET'])
 def getall_users():
-    pass
+    return D_manager.get_all("Users")
 
 @user_bp.route('/users/<int:user_id>', methods=['GET'])
 def get_user():

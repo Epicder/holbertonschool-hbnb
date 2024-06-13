@@ -5,9 +5,10 @@ from models.users import Users
 from models.place import Place
 from models.amenities import Amenities
 from models.city import City
-from p_layer.DataManager import DataManager
+from p_layer import D_manager
 
-D_manager = DataManager()
+
+print(f"{D_manager = }, {hex(id(D_manager)) = }")
 
 class System:
 
@@ -72,7 +73,7 @@ class System:
             new_amenity = Amenities(
                 name_amenity = data_amenities.get('name')
                 )
-            DataManager.data_lists['Amenities'].append(new_amenity.__dict__)
+            D_manager.data_lists['Amenities'].append(new_amenity.__dict__)
         except Exception:
             print("Error creaing amenities, please try again!")
         return new_amenity
@@ -84,15 +85,29 @@ class System:
                 password = data_user.get('password'),
                 first_name = data_user.get('first_name'),
                 last_name = data_user.get('last_name')
-                )
-            if "@" not in new_user.email or ".com" not in new_user.email:
-                raise ValueError("Email, not valid!")
-            existing_users = D_manager.get_all('Users')
-            for user in existing_users:
-                if user.get('email') == data_user.get('email'):
-                    raise ValueError("Email already exist!")
+            )
         except Exception:
             print("Error creating user, please try again")
+
+        existing_users = D_manager.get_all(new_user)
+
+        print(existing_users)
+        print("antes if")
+
+        for user in existing_users:
+            print("''''''''''''''''''''''''")
+            # print(user, data_user)
+            # print(type(user))
+            print(user.get("email"), data_user.get("email"))
+            print(user.get("email") == data_user.get("email"))
+            print("''''''''''''''''''''''''")
+            if user.get('email') == data_user.get('email'):
+                print(new_user.email)
+                print(user.get('email'))
+                raise ValueError("Email already exist!")
+            
+        #except Exception:
+            #print("Error creating user, please try again")
         return new_user
     
     def create_city(data_city):
