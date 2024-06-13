@@ -14,7 +14,6 @@ def create_user():
     data = request.get_json()
     new_user = System.create_user(data)
     D_manager.save(new_user)
-    new_user.id = 123123
     return jsonify({"Message":"User succsessfuly created."}), 201
     
 
