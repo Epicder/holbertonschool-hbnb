@@ -8,8 +8,6 @@ from models.city import City
 from p_layer import D_manager
 
 
-print(f"{D_manager = }, {hex(id(D_manager)) = }")
-
 class System:
 
     def create_review(place_id, data_review):
@@ -90,24 +88,9 @@ class System:
             print("Error creating user, please try again")
 
         existing_users = D_manager.get_all(new_user)
-
-        print(existing_users)
-        print("antes if")
-
         for user in existing_users:
-            print("''''''''''''''''''''''''")
-            # print(user, data_user)
-            # print(type(user))
-            print(user.get("email"), data_user.get("email"))
-            print(user.get("email") == data_user.get("email"))
-            print("''''''''''''''''''''''''")
             if user.get('email') == data_user.get('email'):
-                print(new_user.email)
-                print(user.get('email'))
                 raise ValueError("Email already exist!")
-            
-        #except Exception:
-            #print("Error creating user, please try again")
         return new_user
     
     def create_city(data_city):
