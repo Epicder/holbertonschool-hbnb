@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 from models.IPersistenceManager import IPersistenceManager
+from datetime import datetime
 import json
 
 class DataManager(IPersistenceManager):
@@ -39,6 +40,8 @@ class DataManager(IPersistenceManager):
             instance_list = self.data_lists[instance_name]
             for instance in instance_list:
                 if instance.id == instance_id:
+                    instance['created_at'] = datetime.fromisoformat(instance['created_at'])
+                    instance['updated_at'] = datetime.fromisoformat(instance['updated_at'])
                     return instance
 
             print(f"Invalid id: {instance_id}")
@@ -59,6 +62,12 @@ class DataManager(IPersistenceManager):
             for instance in instance_list:
                 if instance.get('get') == instance_id:
                     self.data_lists[instance_name].remove(instance)
+                    try:
+                        with open('data_base.json', 'w', encoding="utf-8") as file:
+                            file.write(json.dumps(self.data_lists))
+                            return ("File update"), 200
+                    except FileNotFoundError:
+                       return ("File not found"), 404
         else:
             print(f"Invalid Objetct: {instance_name}")
         
@@ -69,6 +78,7 @@ class DataManager(IPersistenceManager):
            instance_list = self.data_lists[instance_name]
            for obj_id in instance_list:
                if obj_id.get('id') == instance.get('id'):
+                   instance['updated_at'] = datetime.now().isoformat
                    instance_list[obj_id] = instance
                    self.data_lists[instance_name] = instance_list
                    try:
