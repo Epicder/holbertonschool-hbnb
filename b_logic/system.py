@@ -34,22 +34,7 @@ class System:
     def create_place(data_place):
         
         try:
-            amenities_list = data_place.get('amenities_list', [])
-            amenities_objects = []
-            for amenity_name in amenities_list:
-                amenity = None
-                for a in DataManager.data_lists['Amenities']:
-                    if a.get('name') == amenity_name:
-                        amenity = a
-                        break
-                if not amenity:
-                    new_amenity = Amenities(amenity_name) # Chequear
-                    DataManager.data_lists['Amenities'].append(new_amenity.__dict__)
-                    amenities_objects.append(new_amenity.__dict__)
-                else:
-                    amenities_objects.append(amenity.__dict__)
-
-            new_plance = Place(
+            new_place = Place(
                 name = data_place.get('name'),
                 host_id = data_place.get('host_id'),
                 description = data_place.get('description'),
@@ -60,25 +45,27 @@ class System:
                 latitude = float(data_place.get('latitude')),
                 longitude = float(data_place.get('longitude')),
                 city_id = data_place.get('city_id'),
-                amenities_list = amenities_objects
+                amenity_ids = data_place.get('amenities_ids')
                 )
-            if new_plance.description == "":
+            if new_place.amenity_ids not in D_manager.data_lists['Amenities']:
+                raise ValueError("Amenity not found!")
+            if new_place.description == "":
                 raise TypeError("The place must have a description!")
-            if new_plance.rooms <= 0:
+            if new_place.rooms <= 0:
                 raise ValueError("The place must have at least one room!")
-            if new_plance.bathroom <= 0:
+            if new_place.bathroom <= 0:
                 raise ValueError("The place must have at least one bathroom!")
-            if new_plance.max_guests <= 0:
+            if new_place.max_guests <= 0:
                 raise ValueError("The place must have at least one guest!")
-            if new_plance.price_per_night <= 0:
+            if new_place.price_per_night <= 0:
                 raise ValueError("Price per night must be positive!")
-            if not -90 <= new_plance.latitude <= 90:
+            if not -90 <= new_place.latitude <= 90:
                 raise ValueError("Please enter a latitud between -90 and 90")
-            if not -180 <= new_plance.longitude <= 180:
+            if not -180 <= new_place.longitude <= 180:
                     raise ValueError("Please enter a longitude between -180 and 180")
         except Exception:
             print("Error creating a place, please try again!")
-        return new_plance
+        return new_place
 
     def create_amenities(data_amenities):# Hay que arreglarlo
         try:
