@@ -25,7 +25,7 @@ class DataManager(IPersistenceManager):
         if instance_name in self.data_lists:
             self.data_lists[instance_name].append(instance.__dict__)
         try:
-            with open('data_base.json', encoding="utf-8") as file:
+            with open('data_base.json', mode='w', encoding="utf-8") as file:
                 file.write(json.dumps(self.data_lists))
         except FileNotFoundError:
             return ("File not found"), 404
