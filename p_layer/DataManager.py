@@ -23,8 +23,7 @@ class DataManager(IPersistenceManager):
                 file.write(json.dumps(self.data_lists))
 
     def save(self, instance):
-        class_name = instance.__class__.__name__
-        
+        class_name = instance.__class__.__name__ 
         if class_name in self.data_lists:
             self.data_lists[class_name].append(instance.__dict__)
         try:
@@ -37,7 +36,10 @@ class DataManager(IPersistenceManager):
             return jsonify(f"Object not found: {class_name}"), 404
    
     def get(self, instance_id, instance):
-        class_name = instance.__class__.__name__
+        if type(instance) is not str:
+            class_name = instance.__class__.__name__
+        else:
+            class_name = instance
         if class_name in self.data_lists:
             instance_list = self.data_lists[class_name]
             for instance in instance_list:
@@ -55,15 +57,17 @@ class DataManager(IPersistenceManager):
         if type(instance_type) is not str:
             class_name = instance_type.__class__.__name__
         else:
-            class_name = instance_type            
-
+            class_name = instance_type
         if class_name in self.data_lists:
             return self.data_lists[class_name]
         else:
             return jsonify(f"Object not found: {class_name}"), 404
     
     def delete(self, instance_id, instance):
-        class_name = instance.__class__.__name__
+        if type(instance) is not str:
+            class_name = instance.__class__.__name__
+        else:
+            class_name = instance
         if class_name in self.data_lists:
             instance_list = self.data_lists[class_name]
             for instance in instance_list:
@@ -79,8 +83,11 @@ class DataManager(IPersistenceManager):
         
     
     def update(self, instance):
-       class_name = instance.__class__.__name__
-       if class_name in self.data_lists:
+        if type(instance) is not str:
+            class_name = instance.__class__.__name__
+        else:
+            class_name = instance
+        if class_name in self.data_lists:
            instance_list = self.data_lists[class_name]
            for obj_id in instance_list:
                if obj_id.get('id') == instance.get('id'):
@@ -92,5 +99,5 @@ class DataManager(IPersistenceManager):
                             file.write(json.dumps(self.data_lists))
                    except FileNotFoundError:
                        return ("File not found"), 404
-       else:
+        else:
             return jsonify(f"Object not found: {class_name}"), 404
