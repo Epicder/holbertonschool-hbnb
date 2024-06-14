@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from flask import jsonify
 from models.reviews import Reviews
 from models.users import Users
 from models.place import Place
@@ -22,17 +23,20 @@ class System:
             print("An error has occured, please try again!")
         place = D_manager.get(place_id, Place)
         if place and place.get('host_id') == new_review.user_id:
-            raise ValueError("User cannot review their own place")
+            raise ValueError("User cannot review their own place"), 409
         existing_review = D_manager.get_all(new_review)
         for review in existing_review:
             if not new_review.user_id in review.get('user_id'):
-                raise ValueError("User not found!")
+                raise ValueError("User not found!"), 404
         existing_place = D_manager.get_all('Place')
         for place in existing_place:
             if not new_review.place_id in place.get('id'):
-                raise ValueError("Place not found!")
-
-        return new_review
+                raise ValueError("Place not found!"), 404
+        try:
+            D_manager.save(new_review)
+            return jsonify({"Message":"Review succsessfuly created."}), 201
+        except Exception:
+            return jsonify({"Message":"Failed to create Review."}), 400
 
     def create_place(data_place):
         
@@ -51,9 +55,9 @@ class System:
                 amenity_ids = data_place.get('amenities_ids')
                 )
         except Exception:
-            print("Error creating a place, please try again!")
+            return jsonify({"Message":"Failed to create Place."}), 400
         if new_place.amenity_ids not in D_manager.data_lists['Amenities']:
-            raise ValueError("Amenity not found!")
+            raise ValueError("Amenity not found!"), 404
         
         #Lo siguiente debe controlarlo la capa de servicios
         #
@@ -76,7 +80,11 @@ class System:
         #
         #
         #
-        return new_place
+        try:
+            D_manager.save(new_place)
+            return jsonify({"Message":"Place succsessfuly created."}), 201
+        except Exception:
+            return jsonify({"Message":"Failed to create Place."}), 400
 
     def create_amenities(data_amenities):
         try:
@@ -84,8 +92,12 @@ class System:
                 name_amenity = data_amenities.get('name')
                 )
         except Exception:
-            print("Error creaing amenities, please try again!")
-        D_manager.data_lists['Amenities'].append(new_amenity.__dict__)
+            return jsonify({"Message":"Failed to create Amenity."}), 400
+        try:
+            D_manager.save(new_amenity)
+            return jsonify({"Message":"Amenity succsessfuly created."}), 201
+        except Exception:
+            return jsonify({"Message":"Failed to create Amenity."}), 400
 
     def create_user(data_user):
         try:
@@ -96,13 +108,16 @@ class System:
                 last_name = data_user.get('last_name')
             )
         except Exception:
-            print("Error creating user, please try again")
-
+            return jsonify({"Message":"Failed to create User."}), 400
         existing_users = D_manager.get_all(new_user)
         for user in existing_users:
             if user.get('email') == data_user.get('email'):
-                raise ValueError("Email already exist!")
-        return new_user
+                raise ValueError("Email already exist!"), 409
+        try:
+            D_manager.save(new_user)
+            return jsonify({"Message":"User succsessfuly created."}), 201
+        except Exception:
+            return jsonify({"Message":"Failed to create User."}), 400
     
     def create_city(data_city):
         try:
@@ -111,8 +126,9 @@ class System:
                 country_code = data_city.get('country_code')
             )
         except Exception:
-            print("Error creaing amenities, please try again!")
-        D_manager.data_lists['City'].append(new_city.__dict__)
-        #
-        #
-        # Debe llamar al DataManager y guardar desde aca, no desde la service layer
+            return jsonify({"Message":"Failed to create City."}), 400
+        try:
+            D_manager.save(new_city)
+            return jsonify({"Message":"City succsessfuly created."}), 201
+        except Exception:
+            return jsonify({"Message":"Failed to create City."}), 400

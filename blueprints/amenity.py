@@ -11,9 +11,7 @@ D_manager = DataManager()
 @amenity_bp.route('/', methods=['POST'])
 def create_amenity():
     data = request.get_json()
-    new_amen = System.create_amenities(data)
-    D_manager.save(new_amen)
-    return jsonify({"Message":"Amenity successfully created."}), 201
+    System.create_amenities(data)
 
 @amenity_bp.route('/', methods=['GET'])
 def get_amenities():

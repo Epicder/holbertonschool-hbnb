@@ -11,9 +11,7 @@ D_manager = DataManager()
 @place_bp.route('/', methods=['POST'])
 def create_place():
     data = request.get_json()
-    new_place = System.create_place(data)
-    D_manager.save(new_place)
-    return jsonify({"Message":"Place successfully created."}), 201
+    System.create_place(data)
 
 @place_bp.route('/', methods=['GET'])
 def get_places():

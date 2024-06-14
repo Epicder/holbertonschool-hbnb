@@ -20,11 +20,7 @@ def create_user():
         raise ValueError("First Name not valid, try a new one!")
     if not data.get('last_name'):
         raise ValueError("Last Name not valid, try a new one!")
-    new_user = System.create_user(data)
-
-    D_manager.save(new_user) # Debe llamar guardar en create_user no desde aca.
-
-    return jsonify({"Message":"User succsessfuly created."}), 201
+    System.create_user(data)
     
 
 @user_bp.route('/users', methods=['GET'])
