@@ -37,7 +37,8 @@ def getall_users():
 @user_bp.route('/users/<user_id>', methods=['GET'])
 def get_user(user_id):
     try:
-        System.get(user_id, 'Users')
+        retorno = System.get(user_id, 'Users')
+        print(retorno)
         return jsonify({"Message":"Successfully retrieved user."}), 200
     except:
         return jsonify({"Message":"User not found."}), 404

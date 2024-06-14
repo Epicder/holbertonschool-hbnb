@@ -8,7 +8,7 @@ place_bp = Blueprint('place', __name__)
 D_manager = DataManager()
 
 
-@place_bp.route('/', methods=['POST'])
+@place_bp.route('/places', methods=['POST'])
 def create_place():
     data = request.get_json()
     System.create_place(data)
@@ -28,17 +28,17 @@ def create_place():
        # if not -180 <= new_place.longitude <= 180:
               #  raise ValueError("Please enter a longitude between -180 and 180")
 
-@place_bp.route('/', methods=['GET'])
+@place_bp.route('/places', methods=['GET'])
 def get_places():
     pass
-@place_bp.route('/<int:place_id>', methods=['GET'])
+@place_bp.route('/places/<place_id>', methods=['GET'])
 def get_place(place_id):
     pass
 
-@place_bp.route('/<int:place_id>', methods=['PUT'])
+@place_bp.route('/places/<place_id>', methods=['PUT'])
 def update_place(place_id):
     pass
 
-@place_bp.route('/<int:place_id>', methods=['DELETE'])
+@place_bp.route('/places/<place_id>', methods=['DELETE'])
 def delete_place(place_id):
     pass

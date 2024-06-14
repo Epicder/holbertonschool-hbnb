@@ -8,15 +8,15 @@ country_bp = Blueprint('country', __name__)
 D_manager = DataManager()
 
 
-@country_bp.route('/', methods=['GET'])
+@country_bp.route('/countries', methods=['GET'])
 def get_countries():
     pass
 
-@country_bp.route('/<string:country_code>', methods=['GET'])
+@country_bp.route('/countries/<string:country_code>', methods=['GET'])
 def get_country(country_code):
     pass
 
-@country_bp.route('/<string:country_code>/cities', methods=['GET'])
+@country_bp.route('/countries/<string:country_code>/cities', methods=['GET'])
 def get_country_cities(country_code):
     pass
 
@@ -28,14 +28,14 @@ def create_city():
 def get_cities():
     pass
 
-@country_bp.route('/cities/<int:city_id>', methods=['GET'])
+@country_bp.route('/cities/<city_id>', methods=['GET'])
 def get_city(city_id):
     pass
 
-@country_bp.route('/cities/<int:city_id>', methods=['PUT'])
+@country_bp.route('/cities/<city_id>', methods=['PUT'])
 def update_city(city_id):
     pass
 
-@country_bp.route('/cities/<int:city_id>', methods=['DELETE'])
+@country_bp.route('/cities/<city_id>', methods=['DELETE'])
 def delete_city(city_id):
     pass
