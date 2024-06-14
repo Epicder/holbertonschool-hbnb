@@ -20,25 +20,41 @@ def create_user():
         raise ValueError("First Name not valid, try a new one!")
     if not data.get('last_name'):
         raise ValueError("Last Name not valid, try a new one!")
-    System.create_user(data)
+    try:
+        System.create_user(data)
+        return jsonify({"Message":"User succsessfuly created."}), 201
+    except Exception:
+        return jsonify({"Message":"Failed to create User."}), 400
     
 
 @user_bp.route('/users', methods=['GET'])
 def getall_users():
-    return D_manager.get_all("Users")
+    try:
+        System.get_all('Users')
+    except:
+        return jsonify({"Message":"User not found."}), 404
 
-@user_bp.route('/users/<int:user_id>', methods=['GET'])
-def get_user():
-    pass
+@user_bp.route('/users/<user_id>', methods=['GET'])
+def get_user(user_id):
+    try:
+        System.get(user_id, 'Users')
+        return jsonify({"Message":"Successfully retrieved user."}), 200
+    except:
+        return jsonify({"Message":"User not found."}), 404
 
-@user_bp.route('/users/<int:user_id>', methods=['PUT'])
+@user_bp.route('/users/<user_id>', methods=['PUT'])
 def update_user(user_id):
-    pass
-
-@user_bp.route('/users/<int:user_id>', methods=['DELETE'])
-def delete_user(user_id):
-    user = D_manager.get(user_id, 'User')
-    if not user:
+    data = request.get_json()
+    try:
+        System.update(user_id, data, 'Users')
         return jsonify({"Message": "User not found"}), 404
-    D_manager.delete(user_id, 'User')
-    return jsonify({"Message":"User successfully deleted"}), 200
+    except:
+        return jsonify({"Message":"User Successfully deleted"}), 204
+
+@user_bp.route('/users/<user_id>', methods=['DELETE'])
+def delete_user(user_id):
+    try:
+        System.delete(user_id, 'Users')
+        return jsonify({"Message":"Successfully user deleted."}), 204
+    except:
+        return jsonify({"Message":"User not found."}), 404

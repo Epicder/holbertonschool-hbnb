@@ -34,11 +34,8 @@ class System:
         for place in existing_place:
             if not new_review.place_id in place.get('id'):
                 raise ValueError("Place not found!")#, 404
-        try:
-            D_manager.save(new_review)
-            return jsonify({"Message":"Review succsessfuly created."}), 201
-        except Exception:
-            return jsonify({"Message":"Failed to create Review."}), 400
+
+        D_manager.save(new_review)
 
     def create_place(data_place):
         
@@ -61,32 +58,7 @@ class System:
         if new_place.amenity_ids not in D_manager.data_lists['Amenities']:
             raise ValueError("Amenity not found!")#, 404
         
-        #Lo siguiente debe controlarlo la capa de servicios
-        #
-        #
-        #
-        if new_place.description == "":
-            raise TypeError("The place must have a description!")
-        if new_place.rooms <= 0:
-            raise ValueError("The place must have at least one room!")
-        if new_place.bathroom <= 0:
-            raise ValueError("The place must have at least one bathroom!")
-        if new_place.max_guests <= 0:
-            raise ValueError("The place must have at least one guest!")
-        if new_place.price_per_night <= 0:
-            raise ValueError("Price per night must be positive!")
-        if not -90 <= new_place.latitude <= 90:
-            raise ValueError("Please enter a latitud between -90 and 90")
-        if not -180 <= new_place.longitude <= 180:
-                raise ValueError("Please enter a longitude between -180 and 180")
-        #
-        #
-        #
-        try:
-            D_manager.save(new_place)
-            return jsonify({"Message":"Place succsessfuly created."}), 201
-        except Exception:
-            return jsonify({"Message":"Failed to create Place."}), 400
+        D_manager.save(new_place)
 
     def create_amenities(data_amenities):
         try:
@@ -95,11 +67,8 @@ class System:
                 )
         except Exception:
             return jsonify({"Message":"Failed to create Amenity."}), 400
-        try:
-            D_manager.save(new_amenity)
-            return jsonify({"Message":"Amenity succsessfuly created."}), 201
-        except Exception:
-            return jsonify({"Message":"Failed to create Amenity."}), 400
+
+        D_manager.save(new_amenity)
 
     def create_user(data_user):
         try:
@@ -115,11 +84,8 @@ class System:
         for user in existing_users:
             if user.get('email') == data_user.get('email'):
                 raise ValueError("Email already exist!")#, 409
-        try:
-            D_manager.save(new_user)
-            return jsonify({"Message":"User succsessfuly created."}), 201
-        except Exception:
-            return jsonify({"Message":"Failed to create User."}), 400
+            
+        D_manager.save(new_user)
     
     def create_city(data_city):
         try:
@@ -134,3 +100,15 @@ class System:
             return jsonify({"Message":"City succsessfuly created."}), 201
         except Exception:
             return jsonify({"Message":"Failed to create City."}), 400
+
+    def update(entity_id, entity, entity_type):
+        D_manager.update(entity_id, entity, entity_type)
+    
+    def delete(entity_id, entity_type):
+        D_manager.delete(entity_id, entity_type)
+    
+    def get(entity_id, entity_type):
+        return D_manager.get(entity_id, entity_type)
+    
+    def get_all(entity_type):
+        return D_manager.get_all(entity_type)

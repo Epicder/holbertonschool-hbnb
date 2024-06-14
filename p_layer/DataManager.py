@@ -31,9 +31,6 @@ class DataManager(IPersistenceManager):
                 file.write(json.dumps(self.data_lists, indent=4))
         except FileNotFoundError:
             return jsonify("File not found"), 404
-
-        else:
-            return jsonify(f"Object not found: {class_name}"), 404
    
     def get(self, entity_id, entity):
         if type(entity) is not str:
@@ -47,10 +44,6 @@ class DataManager(IPersistenceManager):
                     entity['created_at'] = datetime.fromisoformat(entity['created_at'])
                     entity['updated_at'] = datetime.fromisoformat(entity['updated_at'])
                     return entity
-
-            print(f"Invalid id: {entity_id}")
-        else:
-            return jsonify(f"Object not found: {class_name}"), 404
     
     def get_all(self, entity_type):
         
@@ -60,8 +53,6 @@ class DataManager(IPersistenceManager):
             class_name = entity_type
         if class_name in self.data_lists:
             return self.data_lists[class_name]
-        else:
-            return jsonify(f"Object not found: {class_name}"), 404
     
     def delete(self, entity_id, entity):
         if type(entity) is not str:
@@ -77,23 +68,18 @@ class DataManager(IPersistenceManager):
                         with open('data_base.json', 'w', encoding="utf-8") as file:
                             file.write(json.dumps(self.data_lists))
                     except FileNotFoundError:
-                       return ("File not found"), 404
-        else:
-            return jsonify(f"Object not found: {class_name}"), 404
-        
-    
+                       return jsonify("File not found"), 404
+
     def update(self, entity_id, entity, entity_type):
         if entity_type in self.data_lists:
            entity_list = self.data_lists[entity_type]
            for item in entity_list:
                if entity_id == item.get('id'):
-                   entity['updated_at'] = datetime.now().isoformat
+                   item['updated_at'] = datetime.now().isoformat
                    for key, value in entity.items():
                        item[key] = value
         try:
             with open('data_base.json', 'w', encoding="utf-8") as file:
                 file.write(json.dumps(self.data_lists, indent=4))
         except FileNotFoundError:
-                return ("File not found"), 404
-        else:
-            return jsonify(f"Object not found: {entity_type}"), 404
+                return jsonify("File not found"), 404
