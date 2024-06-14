@@ -23,20 +23,15 @@ class System:
         place = D_manager.get(place_id, Place)
         if place and place.get('host_id') == new_review.user_id:
             raise ValueError("User cannot review their own place")
-        
-        #Lo siguiente debe controlarlo la capa de servicios
-        #
-        #
-        #
-        if new_review.rating <= 0:
-            raise ValueError("Rating must be a number from 1 to 5")
-        if new_review.comment == "":
-            raise TypeError("A comment must be written")
-        print("Thank you for your review!")
-        #
-        #
-        #
-        
+        existing_review = D_manager.get_all(new_review)
+        for review in existing_review:
+            if not new_review.user_id in review.get('user_id'):
+                raise ValueError("User not found!")
+        existing_place = D_manager.get_all('Place')
+        for place in existing_place:
+            if not new_review.place_id in place.get('id'):
+                raise ValueError("Place not found!")
+
         return new_review
 
     def create_place(data_place):
