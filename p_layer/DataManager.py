@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from flask import jsonify
 from models.IPersistenceManager import IPersistenceManager
 from datetime import datetime
 import json
@@ -30,10 +31,10 @@ class DataManager(IPersistenceManager):
             with open('data_base.json', mode='w', encoding="utf-8") as file:
                 file.write(json.dumps(self.data_lists, indent=4))
         except FileNotFoundError:
-            return ("File not found"), 404
+            return jsonify("File not found"), 404
 
         else:
-            print(f"Invalid Object: {class_name}")
+            return jsonify(f"Object not found: {class_name}"), 404
    
     def get(self, instance_id, instance):
         class_name = instance.__class__.__name__
@@ -47,7 +48,7 @@ class DataManager(IPersistenceManager):
 
             print(f"Invalid id: {instance_id}")
         else:
-            print(f"Invalid Object: {class_name}")
+            return jsonify(f"Object not found: {class_name}"), 404
     
     def get_all(self, instance_type):
         
@@ -59,7 +60,7 @@ class DataManager(IPersistenceManager):
         if class_name in self.data_lists:
             return self.data_lists[class_name]
         else:
-            return print(f"Invalid Object: {class_name}")
+            return jsonify(f"Object not found: {class_name}"), 404
     
     def delete(self, instance_id, instance):
         class_name = instance.__class__.__name__
@@ -71,11 +72,10 @@ class DataManager(IPersistenceManager):
                     try:
                         with open('data_base.json', 'w', encoding="utf-8") as file:
                             file.write(json.dumps(self.data_lists))
-                            return ("File update"), 200
                     except FileNotFoundError:
                        return ("File not found"), 404
         else:
-            print(f"Invalid Objetct: {class_name}")
+            return jsonify(f"Object not found: {class_name}"), 404
         
     
     def update(self, instance):
@@ -90,8 +90,7 @@ class DataManager(IPersistenceManager):
                    try:
                         with open('data_base.json', encoding="utf-8") as file:
                             file.write(json.dumps(self.data_lists))
-                            return ("File update"), 200
                    except FileNotFoundError:
                        return ("File not found"), 404
        else:
-            print(f"Invalid Objetct: {class_name}")
+            return jsonify(f"Object not found: {class_name}"), 404

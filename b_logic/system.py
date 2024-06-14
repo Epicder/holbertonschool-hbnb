@@ -23,15 +23,17 @@ class System:
             print("An error has occured, please try again!")
         place = D_manager.get(place_id, Place)
         if place and place.get('host_id') == new_review.user_id:
-            raise ValueError("User cannot review their own place"), 409
+            raise ValueError("User cannot review their own place")#, 409
         existing_review = D_manager.get_all(new_review)
         for review in existing_review:
             if not new_review.user_id in review.get('user_id'):
-                raise ValueError("User not found!"), 404
+                raise ValueError("User not found!")#, 404
+            if new_review.user_id in review.get('id') and place_id in review.get('place_id'):
+                raise ValueError("User cannot review multiple times on the same place")
         existing_place = D_manager.get_all('Place')
         for place in existing_place:
             if not new_review.place_id in place.get('id'):
-                raise ValueError("Place not found!"), 404
+                raise ValueError("Place not found!")#, 404
         try:
             D_manager.save(new_review)
             return jsonify({"Message":"Review succsessfuly created."}), 201
@@ -57,7 +59,7 @@ class System:
         except Exception:
             return jsonify({"Message":"Failed to create Place."}), 400
         if new_place.amenity_ids not in D_manager.data_lists['Amenities']:
-            raise ValueError("Amenity not found!"), 404
+            raise ValueError("Amenity not found!")#, 404
         
         #Lo siguiente debe controlarlo la capa de servicios
         #
@@ -112,7 +114,7 @@ class System:
         existing_users = D_manager.get_all(new_user)
         for user in existing_users:
             if user.get('email') == data_user.get('email'):
-                raise ValueError("Email already exist!"), 409
+                raise ValueError("Email already exist!")#, 409
         try:
             D_manager.save(new_user)
             return jsonify({"Message":"User succsessfuly created."}), 201
