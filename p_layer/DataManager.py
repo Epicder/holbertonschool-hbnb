@@ -22,10 +22,10 @@ class DataManager(IPersistenceManager):
             with open('data_base.json', 'w', encoding="utf-8") as file:
                 file.write(json.dumps(self.data_lists))
 
-    def save(self, instance):
-        class_name = instance.__class__.__name__ 
+    def save(self, entity):
+        class_name = entity.__class__.__name__ 
         if class_name in self.data_lists:
-            self.data_lists[class_name].append(instance.__dict__)
+            self.data_lists[class_name].append(entity.__dict__)
         try:
             with open('data_base.json', mode='w', encoding="utf-8") as file:
                 file.write(json.dumps(self.data_lists, indent=4))
@@ -35,44 +35,44 @@ class DataManager(IPersistenceManager):
         else:
             return jsonify(f"Object not found: {class_name}"), 404
    
-    def get(self, instance_id, instance):
-        if type(instance) is not str:
-            class_name = instance.__class__.__name__
+    def get(self, entity_id, entity):
+        if type(entity) is not str:
+            class_name = entity.__class__.__name__
         else:
-            class_name = instance
+            class_name = entity
         if class_name in self.data_lists:
-            instance_list = self.data_lists[class_name]
-            for instance in instance_list:
-                if instance.id == instance_id:
-                    instance['created_at'] = datetime.fromisoformat(instance['created_at'])
-                    instance['updated_at'] = datetime.fromisoformat(instance['updated_at'])
-                    return instance
+            entity_list = self.data_lists[class_name]
+            for entity in entity_list:
+                if entity.id == entity_id:
+                    entity['created_at'] = datetime.fromisoformat(entity['created_at'])
+                    entity['updated_at'] = datetime.fromisoformat(entity['updated_at'])
+                    return entity
 
-            print(f"Invalid id: {instance_id}")
+            print(f"Invalid id: {entity_id}")
         else:
             return jsonify(f"Object not found: {class_name}"), 404
     
-    def get_all(self, instance_type):
+    def get_all(self, entity_type):
         
-        if type(instance_type) is not str:
-            class_name = instance_type.__class__.__name__
+        if type(entity_type) is not str:
+            class_name = entity_type.__class__.__name__
         else:
-            class_name = instance_type
+            class_name = entity_type
         if class_name in self.data_lists:
             return self.data_lists[class_name]
         else:
             return jsonify(f"Object not found: {class_name}"), 404
     
-    def delete(self, instance_id, instance):
-        if type(instance) is not str:
-            class_name = instance.__class__.__name__
+    def delete(self, entity_id, entity):
+        if type(entity) is not str:
+            class_name = entity.__class__.__name__
         else:
-            class_name = instance
+            class_name = entity
         if class_name in self.data_lists:
-            instance_list = self.data_lists[class_name]
-            for instance in instance_list:
-                if instance.get('get') == instance_id:
-                    self.data_lists[class_name].remove(instance)
+            entity_list = self.data_lists[class_name]
+            for entity in entity_list:
+                if entity.get('get') == entity_id:
+                    self.data_lists[class_name].remove(entity)
                     try:
                         with open('data_base.json', 'w', encoding="utf-8") as file:
                             file.write(json.dumps(self.data_lists))
@@ -82,18 +82,18 @@ class DataManager(IPersistenceManager):
             return jsonify(f"Object not found: {class_name}"), 404
         
     
-    def update(self, instance, instance_type):
-        if instance_type in self.data_lists:
-           instance_list = self.data_lists[instance_type]
-           for obj_id in instance_list:
-               if obj_id.get('id') == instance.get('id'):
-                   instance['updated_at'] = datetime.now().isoformat
-                   instance_list[obj_id] = instance
-                   self.data_lists[instance_type] = instance_list
-                   try:
-                        with open('data_base.json', encoding="utf-8") as file:
-                            file.write(json.dumps(self.data_lists))
-                   except FileNotFoundError:
-                       return ("File not found"), 404
+    def update(self, entity_id, entity, entity_type):
+        if entity_type in self.data_lists:
+           entity_list = self.data_lists[entity_type]
+           for item in entity_list:
+               if entity_id == item.get('id'):
+                   entity['updated_at'] = datetime.now().isoformat
+                   for key, value in entity.items():
+                       item[key] = value
+        try:
+            with open('data_base.json', 'w', encoding="utf-8") as file:
+                file.write(json.dumps(self.data_lists, indent=4))
+        except FileNotFoundError:
+                return ("File not found"), 404
         else:
-            return jsonify(f"Object not found: {instance_type}"), 404
+            return jsonify(f"Object not found: {entity_type}"), 404

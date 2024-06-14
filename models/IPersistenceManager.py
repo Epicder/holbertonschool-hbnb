@@ -4,21 +4,21 @@ from abc import ABC, abstractmethod
 
 class IPersistenceManager(ABC):
        @abstractmethod
-       def save(self, instance):
+       def save(self, entity):
            pass
 
        @abstractmethod
-       def get(self, instance_id, instance_type):
+       def get(self, entity_id, entity_type):
            pass
        
        @abstractmethod
-       def get_all(self, instance_type):
+       def get_all(self, entity_type):
            pass
 
        @abstractmethod
-       def update(self, instance, instance_type):
+       def update(self, endity_id, entity, entity_type):
            pass
 
        @abstractmethod
-       def delete(self, instance_id, instance_type):
+       def delete(self, entity_id, entity_type):
            pass
