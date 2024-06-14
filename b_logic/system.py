@@ -18,16 +18,25 @@ class System:
                 comment = data_review.get('comment'),
                 rating = data_review.get('rating')
             )
-            place = D_manager.get(place_id, Place)
-            if place and place.get('host_id') == new_review.user_id:
-                raise ValueError("User cannot review their own place")
-            if new_review.rating <= 0:
-                raise ValueError("Rating must be a number from 1 to 5")
-            if new_review.comment == "":
-                raise TypeError("A comment must be written")
-            print("Thank you for your review!")
         except Exception:
             print("An error has occured, please try again!")
+        place = D_manager.get(place_id, Place)
+        if place and place.get('host_id') == new_review.user_id:
+            raise ValueError("User cannot review their own place")
+        
+        #Lo siguiente debe controlarlo la capa de servicios
+        #
+        #
+        #
+        if new_review.rating <= 0:
+            raise ValueError("Rating must be a number from 1 to 5")
+        if new_review.comment == "":
+            raise TypeError("A comment must be written")
+        print("Thank you for your review!")
+        #
+        #
+        #
+        
         return new_review
 
     def create_place(data_place):
@@ -46,35 +55,42 @@ class System:
                 city_id = data_place.get('city_id'),
                 amenity_ids = data_place.get('amenities_ids')
                 )
-            if new_place.amenity_ids not in D_manager.data_lists['Amenities']:
-                raise ValueError("Amenity not found!")
-            if new_place.description == "":
-                raise TypeError("The place must have a description!")
-            if new_place.rooms <= 0:
-                raise ValueError("The place must have at least one room!")
-            if new_place.bathroom <= 0:
-                raise ValueError("The place must have at least one bathroom!")
-            if new_place.max_guests <= 0:
-                raise ValueError("The place must have at least one guest!")
-            if new_place.price_per_night <= 0:
-                raise ValueError("Price per night must be positive!")
-            if not -90 <= new_place.latitude <= 90:
-                raise ValueError("Please enter a latitud between -90 and 90")
-            if not -180 <= new_place.longitude <= 180:
-                    raise ValueError("Please enter a longitude between -180 and 180")
         except Exception:
             print("Error creating a place, please try again!")
+        if new_place.amenity_ids not in D_manager.data_lists['Amenities']:
+            raise ValueError("Amenity not found!")
+        
+        #Lo siguiente debe controlarlo la capa de servicios
+        #
+        #
+        #
+        if new_place.description == "":
+            raise TypeError("The place must have a description!")
+        if new_place.rooms <= 0:
+            raise ValueError("The place must have at least one room!")
+        if new_place.bathroom <= 0:
+            raise ValueError("The place must have at least one bathroom!")
+        if new_place.max_guests <= 0:
+            raise ValueError("The place must have at least one guest!")
+        if new_place.price_per_night <= 0:
+            raise ValueError("Price per night must be positive!")
+        if not -90 <= new_place.latitude <= 90:
+            raise ValueError("Please enter a latitud between -90 and 90")
+        if not -180 <= new_place.longitude <= 180:
+                raise ValueError("Please enter a longitude between -180 and 180")
+        #
+        #
+        #
         return new_place
 
-    def create_amenities(data_amenities):# Hay que arreglarlo
+    def create_amenities(data_amenities):
         try:
             new_amenity = Amenities(
                 name_amenity = data_amenities.get('name')
                 )
-            D_manager.data_lists['Amenities'].append(new_amenity.__dict__)
         except Exception:
             print("Error creaing amenities, please try again!")
-        return new_amenity
+        D_manager.data_lists['Amenities'].append(new_amenity.__dict__)
 
     def create_user(data_user):
         try:
@@ -94,8 +110,14 @@ class System:
         return new_user
     
     def create_city(data_city):
-        new_city = City(
-            name = data_city.get('name'),
-            country_code = data_city.get('country_code')
-        )
-        return new_city
+        try:
+            new_city = City(
+                name = data_city.get('name'),
+                country_code = data_city.get('country_code')
+            )
+        except Exception:
+            print("Error creaing amenities, please try again!")
+        D_manager.data_lists['City'].append(new_city.__dict__)
+        #
+        #
+        # Debe llamar al DataManager y guardar desde aca, no desde la service layer

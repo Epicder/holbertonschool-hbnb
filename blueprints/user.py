@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-from flask import Blueprint, request, jsonify, abort
+from flask import Blueprint, request, jsonify
 from models.users import Users
 from b_logic.system import System
 from p_layer import D_manager
@@ -8,23 +8,21 @@ from p_layer import D_manager
 
 user_bp = Blueprint('user', __name__)
 
-print(f"{D_manager = }, {hex(id(D_manager)) = }")
 
 @user_bp.route('/users', methods=['POST'])
 def create_user():
     data = request.get_json()
     if "@" not in data.get('email') or ".com" not in data.get('email'):
         raise ValueError("Email, not valid!")
-    if not  data.get('password'):
+    if not data.get('password'):
         raise ValueError("Password not valid, try a new one!")
     if not data.get('first_name'):
         raise ValueError("First Name not valid, try a new one!")
     if not data.get('last_name'):
         raise ValueError("Last Name not valid, try a new one!")
-    # print(D_manager.data_lists)
     new_user = System.create_user(data)
 
-    D_manager.save(new_user)
+    D_manager.save(new_user) # Debe llamar guardar en create_user no desde aca.
 
     return jsonify({"Message":"User succsessfuly created."}), 201
     
