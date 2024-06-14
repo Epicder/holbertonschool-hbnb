@@ -1,0 +1,18 @@
+{
+    "Users": [
+        {
+            "id": "807c683c-9218-4ff2-b850-cda8020d2c53",
+            "created_at": "2024-06-14T20:32:08.961517",
+            "updated_at": "2024-06-14T20:43:49.458305",
+            "email": "EmailActualizado@example.com",
+            "password": "ilovePUTmethod123",
+            "first_name": "Never gonna",
+            "last_name": "Gonzalez"
+        }
+    ],
+    "Reviews": [],
+    "Place": [],
+    "Amenities": [],
+    "Country": [],
+    "City": []
+}

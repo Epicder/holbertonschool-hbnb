@@ -31,14 +31,14 @@ def create_user():
 def getall_users():
     try:
         System.get_all('Users')
+        return jsonify({"Message":"Successfully retrieved  all user."}), 200
     except:
         return jsonify({"Message":"User not found."}), 404
 
 @user_bp.route('/users/<user_id>', methods=['GET'])
 def get_user(user_id):
     try:
-        retorno = System.get(user_id, 'Users')
-        print(retorno)
+        System.get(user_id, 'Users')
         return jsonify({"Message":"Successfully retrieved user."}), 200
     except:
         return jsonify({"Message":"User not found."}), 404
@@ -48,9 +48,9 @@ def update_user(user_id):
     data = request.get_json()
     try:
         System.update(user_id, data, 'Users')
-        return jsonify({"Message": "User not found"}), 404
-    except:
         return jsonify({"Message":"User Successfully deleted"}), 204
+    except:
+        return jsonify({"Message": "User not found"}), 404
 
 @user_bp.route('/users/<user_id>', methods=['DELETE'])
 def delete_user(user_id):
