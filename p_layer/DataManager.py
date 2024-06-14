@@ -82,22 +82,18 @@ class DataManager(IPersistenceManager):
             return jsonify(f"Object not found: {class_name}"), 404
         
     
-    def update(self, instance):
-        if type(instance) is not str:
-            class_name = instance.__class__.__name__
-        else:
-            class_name = instance
-        if class_name in self.data_lists:
-           instance_list = self.data_lists[class_name]
+    def update(self, instance, instance_type):
+        if instance_type in self.data_lists:
+           instance_list = self.data_lists[instance_type]
            for obj_id in instance_list:
                if obj_id.get('id') == instance.get('id'):
                    instance['updated_at'] = datetime.now().isoformat
                    instance_list[obj_id] = instance
-                   self.data_lists[class_name] = instance_list
+                   self.data_lists[instance_type] = instance_list
                    try:
                         with open('data_base.json', encoding="utf-8") as file:
                             file.write(json.dumps(self.data_lists))
                    except FileNotFoundError:
                        return ("File not found"), 404
         else:
-            return jsonify(f"Object not found: {class_name}"), 404
+            return jsonify(f"Object not found: {instance_type}"), 404

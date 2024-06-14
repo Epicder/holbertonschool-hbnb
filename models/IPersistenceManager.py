@@ -16,7 +16,7 @@ class IPersistenceManager(ABC):
            pass
 
        @abstractmethod
-       def update(self, instance):
+       def update(self, instance, instance_type):
            pass
 
        @abstractmethod
