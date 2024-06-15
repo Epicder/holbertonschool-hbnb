@@ -15,12 +15,12 @@ curl -X GET http://localhost:5000/users
 
 GET ID USER ✅
 -------------
-curl -X GET http://localhost:5000/users/49e4a667-9ee3-4305-b944-f7e48ff7c26e
+curl -X GET http://localhost:5000/users/1f1b8adf-88ed-4bbc-bbb8-2b91d76d4640
 
 
-ACTUALIZAR USER POR ID ❌
+ACTUALIZAR USER POR ID ✅
 -------------
-curl -X PUT http://localhost:5000/users/807c683c-9218-4ff2-b850-cda8020d2c53 \
+curl -X PUT http://localhost:5000/users/1f1b8adf-88ed-4bbc-bbb8-2b91d76d4640 \
 -H "Content-Type: application/json" \
 -d '{
   "email": "EmailActualizado@example.com",
@@ -30,6 +30,6 @@ curl -X PUT http://localhost:5000/users/807c683c-9218-4ff2-b850-cda8020d2c53 \
 }'
 
 
-DELETE USER POR ID ❌
+DELETE USER POR ID ✅
 --------------
-curl -X DELETE http://localhost:5000/users/807c683c-9218-4ff2-b850-cda8020d2c53
+curl -X DELETE http://localhost:5000/users/1f1b8adf-88ed-4bbc-bbb8-2b91d76d4640

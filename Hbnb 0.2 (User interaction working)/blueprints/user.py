@@ -30,16 +30,16 @@ def create_user():
 @user_bp.route('/users', methods=['GET'])
 def getall_users():
     try:
-        System.get_all('Users')
-        return jsonify({"Message":"Successfully retrieved  all user."}), 200
+        users = System.get_all('Users')
+        return jsonify({"Message":"Successfully retrieved  all user.", "Users":users}), 200
     except:
         return jsonify({"Message":"User not found."}), 404
 
 @user_bp.route('/users/<user_id>', methods=['GET'])
 def get_user(user_id):
     try:
-        System.get(user_id, 'Users')
-        return jsonify({"Message":"Successfully retrieved user."}), 200
+        user = System.get(user_id, 'Users')
+        return jsonify({"Message":"Successfully retrieved user.", "Users":user}), 200
     except:
         return jsonify({"Message":"User not found."}), 404
 
@@ -48,13 +48,16 @@ def update_user(user_id):
     data = request.get_json()
     try:
         System.update(user_id, data, 'Users')
-        return jsonify({"Message":"User Successfully deleted"}), 204
+        return jsonify({"Message":"User Successfully updated"}), 204
     except:
         return jsonify({"Message": "User not found"}), 404
 
 @user_bp.route('/users/<user_id>', methods=['DELETE'])
 def delete_user(user_id):
     try:
+        user = System.get(user_id, 'Users')
+        if user == None:
+            return jsonify({"Message":"User not found."}), 404
         System.delete(user_id, 'Users')
         return jsonify({"Message":"Successfully user deleted."}), 204
     except:
