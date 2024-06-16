@@ -42,7 +42,7 @@ curl -X POST http://localhost:5000/places \
      -H "Content-Type: application/json" \
      -d '{
            "name": "Lugar_increible",
-           "host_id": "host_id_del_place",
+           "host_id": "d836e96f-4e9c-4053-a9bf-070693dbd76c",
            "description": "Este lugar es hermoso",
            "rooms": 2,
            "bathrooms": 1,
@@ -51,7 +51,7 @@ curl -X POST http://localhost:5000/places \
            "latitude": 40.7128,
            "longitude": -74.0060,
            "city_id": "city_id_del_place",
-           "amenities_ids": ["amenity_id_1", "amenity_id_2"]
+           "amenities_ids": ["52e87dae-8c90-4e7c-a845-e2b8c36c025d"]
          }'
 
 CREATE REVIEW ❔
@@ -69,6 +69,6 @@ curl -X POST http://localhost:5000/reviews \
 CREATE AMENITY ❔
 --------------
 
-curl -X POST http://tuservidor.com/amenities \
+curl -X POST http://localhost:5000/amenities \ 
      -H "Content-Type: application/json" \
-     -d '{"id": 123, "name": "Wifi"}'
+     -d '{"name": "Wifi"}'
