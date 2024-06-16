@@ -65,3 +65,10 @@ curl -X POST http://localhost:5000/reviews \
            "place_id": "place_id_del_review",
            "comment": "Este lugar es increíble!"
          }'
+
+CREATE AMENITY ❔
+--------------
+
+curl -X POST http://tuservidor.com/amenities \
+     -H "Content-Type: application/json" \
+     -d '{"id": 123, "name": "Wifi"}'
