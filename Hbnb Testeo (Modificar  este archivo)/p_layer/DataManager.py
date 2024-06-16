@@ -85,3 +85,17 @@ class DataManager(IPersistenceManager):
                     file.write(json.dumps(self.data_lists, indent=4))
             except FileNotFoundError:
                 return jsonify("File not found"), 404
+
+    def get_all_country(self):
+        try:
+            with open('all_countries.json', encoding="utf-8") as file:
+                countries = json.load(file)
+        except FileNotFoundError:
+                return jsonify("File not found"), 404
+        return countries
+    
+    def get_country(self, entity_id):
+        countries = DataManager.get_all_country()
+        for country in countries:
+            if country.get("alpha-2") == entity_id:
+                return country

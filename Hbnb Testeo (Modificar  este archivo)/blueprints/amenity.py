@@ -2,10 +2,8 @@
 
 from flask import Blueprint, request, jsonify
 from b_logic.system import System
-from p_layer.DataManager import DataManager
 
 amenity_bp = Blueprint('amenity', __name__)
-D_manager = DataManager()
 
 
 @amenity_bp.route('/amenities', methods=['POST'])
@@ -49,6 +47,6 @@ def delete_amenity(amenity_id):
         if amenity == None:
             return jsonify({"Message":"Amenity not found."}), 404
         System.delete(amenity_id, 'Amenities')
-        return jsonify({"Message":"Deleted amenity succesfully."}), 200
+        return jsonify({"Message":"Deleted amenity succesfully."}), 204
     except:
         return jsonify({"Message":"Amenity not found."}), 404

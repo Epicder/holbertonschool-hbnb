@@ -77,6 +77,6 @@ def delete_review(review_id):
         if review == None:
             return jsonify({"Message":"Review not found."}), 404
         System.delete(review_id, 'Reviews')
-        return jsonify({"Message":"Successfully review deleted."}), 200
+        return jsonify({"Message":"Successfully review deleted."}), 204
     except:
         return jsonify({"Message":"Review not found."}), 404
