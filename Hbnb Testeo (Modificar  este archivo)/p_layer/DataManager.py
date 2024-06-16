@@ -38,6 +38,7 @@ class DataManager(IPersistenceManager):
             class_name = entity_type.__class__.__name__
         else:
             class_name = entity_type
+            
         if class_name in self.data_lists:
             entity_list = self.data_lists[class_name]
             for entity in entity_list:
@@ -64,11 +65,9 @@ class DataManager(IPersistenceManager):
             for entity in entity_list:
                 if entity.get('id') == entity_id:
                     self.data_lists[class_name].remove(entity)
-                else:
-                    print("tas re gil")
             try:
                 with open('data_base.json', 'w', encoding="utf-8") as file:
-                    file.write(json.dumps(self.data_lists))
+                    file.write(json.dumps(self.data_lists, indent=4))
             except FileNotFoundError:
                 return jsonify("File not found"), 404
 

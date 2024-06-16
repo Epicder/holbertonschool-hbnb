@@ -27,34 +27,46 @@ def create_place_review(place_id):
 
 @review_bp.route('/users/<user_id>/reviews', methods=['GET'])
 def get_user_review(user_id):
-    try:
-        reviews = System.get_all(user_id, 'reviews')
-        return jsonify({"Message":"Successfully retrieved review.", "Reviews":reviews}), 200
-    except:
-        return jsonify({"Message":"User not found."}), 404
+        try:
+            all_reviews = System.get_all('Reviews')
+            reviews = []
+            for review in all_reviews:
+                if review['user_id'] == user_id:
+                    reviews.append(review)
+            return jsonify({"Message": "Successfully retrieved user reviews.", "Reviews": reviews}), 200
+        except Exception as e:
+            return jsonify({"Message":f"User not found.{e}"}), 404
 
 @review_bp.route('/place/<place_id>/reviews', methods=['GET'])
 def get_place_review(place_id):
     try:
-        reviews = System.get(place_id, 'reviews')
-        return jsonify({"Message":"Successfully retrieved review.", "Reviews":reviews}), 200
-    except:
-        return jsonify({"Message":"User not found."}), 404
+        all_reviews = System.get_all('Reviews')
+        reviews = []
+        for review in all_reviews:
+            if review['place_id'] == place_id:
+                reviews.append(review)
+        return jsonify({"Message": "Successfully retrieved place reviews.", "Reviews": reviews}), 200
+    except Exception as e:
+        return jsonify({"Message":f"User not found. {e}"}), 404
 
 @review_bp.route('/review/<review_id>', methods=['GET'])
 def get_review(review_id):
     try:
-        reviews = System.get(review_id, 'reviews')
-        return jsonify({"Message":"Successfully retrieved review.", "Reviews":reviews}), 200
-    except:
-        return jsonify({"Message":"User not found."}), 404
+        all_reviews = System.get_all('Reviews')
+        reviews = []
+        for review in all_reviews:
+            if review['id'] == review_id:
+                reviews.append(review)
+        return jsonify({"Message":"Successfully retrieved review.", "Reviews":review}), 200
+    except Exception as e:
+        return jsonify({"Message":f"Review not found. {e}"}), 404
 
 @review_bp.route('/review/<review_id>', methods=['PUT'])
 def update_review(review_id):
     data = request.get_json()
     try:
         review = System.update(review_id, data, 'Reviews')
-        return jsonify({"Message":"Review Successfully updated", "Reviews":review}), 204
+        return jsonify({"Message":"Review Successfully updated", "Reviews":review}), 200
     except:
         return jsonify({"Message": "Review not found"}), 404
 
@@ -65,6 +77,6 @@ def delete_review(review_id):
         if review == None:
             return jsonify({"Message":"Review not found."}), 404
         System.delete(review_id, 'Reviews')
-        return jsonify({"Message":"Successfully review deleted."}), 204
+        return jsonify({"Message":"Successfully review deleted."}), 200
     except:
         return jsonify({"Message":"Review not found."}), 404

@@ -61,8 +61,8 @@ def get_place(place_id):
 def update_place(place_id):
     data = request.get_json()
     try:
-        System.update(place_id, data, 'Place')
-        return jsonify({"Message":"Place Successfully updated"}), 204
+        updated_place = System.update(place_id, data, 'Place')
+        return jsonify({"Message":"Place Successfully updated"}), 200
     except:
         return jsonify({"Message": "Place not found"}), 404
 
@@ -73,6 +73,6 @@ def delete_place(place_id):
         if place == None:
             return jsonify({"Message":"Place not found."}), 404
         System.delete(place_id, 'Place')
-        return jsonify({"Message":"Successfully place deleted."}), 204
+        return jsonify({"Message":"Successfully place deleted."}), 200
     except:
         return jsonify({"Message":"Place not found."}), 404
