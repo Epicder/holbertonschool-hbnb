@@ -24,7 +24,7 @@ def create_place():
         raise TypeError("The place must have a description!")
     if data.get('rooms') <= 0:
         raise ValueError("The place must have at least one room!")
-    if data.get('bathroom') <= 0:
+    if data.get('bathrooms') <= 0:
         raise ValueError("The place must have at least one bathroom!")
     if data.get('max_guests') <= 0:
         raise ValueError("The place must have at least one guest!")
@@ -38,20 +38,41 @@ def create_place():
         System.create_place(data)
         return jsonify({"Message":"Place successfully created."}), 200
     except Exception as e:
-        return jsonify({f"Message":"An error creating a place {e}"}), 404
+        return jsonify({"Message":"An error creating a place {}".format(e)}), 400
 
 
 @place_bp.route('/places', methods=['GET'])
 def get_places():
-    pass
+    try:
+        place = System.get_all('Place')
+        return jsonify({"Message":"Successfully retrieved all Places.", "Place":place}), 200
+    except:
+        return jsonify({"Message":"Places not found."}), 404
+    
 @place_bp.route('/places/<place_id>', methods=['GET'])
 def get_place(place_id):
-    pass
+    try:
+        place = System.get(place_id, 'Place')
+        return jsonify({"Message":"Successfully retrieved place", "Place":place}), 200
+    except:
+        return jsonify({"Message":"Place not found."}), 404
 
 @place_bp.route('/places/<place_id>', methods=['PUT'])
 def update_place(place_id):
-    pass
+    data = request.get_json()
+    try:
+        System.update(place_id, data, 'Place')
+        return jsonify({"Message":"Place Successfully updated"}), 204
+    except:
+        return jsonify({"Message": "Place not found"}), 404
 
 @place_bp.route('/places/<place_id>', methods=['DELETE'])
 def delete_place(place_id):
-    pass
+    try:
+        place = System.get(place_id, 'Place')
+        if place == None:
+            return jsonify({"Message":"Place not found."}), 404
+        System.delete(place_id, 'Place')
+        return jsonify({"Message":"Successfully place deleted."}), 204
+    except:
+        return jsonify({"Message":"Place not found."}), 404

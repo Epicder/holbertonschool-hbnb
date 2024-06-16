@@ -10,7 +10,7 @@ class Place(Basic_data):
         self.name = name
         self.description = description
         self.rooms = rooms
-        self.bathroom = bathrooms
+        self.bathrooms = bathrooms
         self.max_guests = max_guests
         self.price_per_night = price_per_night
         self.latitude = latitude

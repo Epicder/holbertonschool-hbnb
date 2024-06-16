@@ -45,9 +45,9 @@ class System:
                 host_id = data_place.get('host_id'),
                 description = data_place.get('description'),
                 rooms = data_place.get('rooms'),
-                bathroom = int(data_place.get('bathrooms')),
+                bathrooms = int(data_place.get('bathrooms')),
                 max_guests = int(data_place.get('max_guests')),
-                price_per_night =  float(data_place.get('precie_per_nigth')),
+                price_per_night = float(data_place.get('price_per_night')),
                 latitude = float(data_place.get('latitude')),
                 longitude = float(data_place.get('longitude')),
                 city_id = data_place.get('city_id'),
@@ -55,22 +55,6 @@ class System:
                 )
         except Exception:
             return jsonify({"Message":"Failed to create Place."}), 400
-        if new_place.amenity_ids not in D_manager.data_lists['Amenities']:
-            raise ValueError("Amenity not found!")
-        if new_place.description == "":
-            raise TypeError("The place must have a description!")
-        if new_place.rooms <= 0:
-            raise ValueError("The place must have at least one room!")
-        if new_place.bathroom <= 0:
-            raise ValueError("The place must have at least one bathroom!")
-        if new_place.max_guests <= 0:
-            raise ValueError("The place must have at least one guest!")
-        if new_place.price_per_night <= 0:
-            raise ValueError("Price per night must be positive!")
-        if not -90 <= new_place.latitude <= 90:
-            raise ValueError("Please enter a latitud between -90 and 90")
-        if not -180 <= new_place.longitude <= 180:
-            raise ValueError("Please enter a longitude between -180 and 180")
         
         D_manager.save(new_place)
 

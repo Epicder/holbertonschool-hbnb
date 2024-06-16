@@ -1,4 +1,3 @@
-USER:
 POST USER ✅
 -----------
 curl -X POST http://localhost:5000/users \
@@ -35,4 +34,41 @@ DELETE USER POR ID ✅
 --------------
 curl -X DELETE http://localhost:5000/users/1f1b8adf-88ed-4bbc-bbb8-2b91d76d4640
 
-REVIEW:
+
+CREATE PLACE ✅
+--------------
+
+curl -X POST http://localhost:5000/places \
+     -H "Content-Type: application/json" \
+     -d '{
+           "name": "Lugar_increible",
+           "host_id": "905c79d1-0edf-464e-9c10-75ffd543f74f",
+           "description": "Este lugar no es hermoso, es una basura",
+           "rooms": 2,
+           "bathrooms": 1,
+           "max_guests": 4,
+           "price_per_night": 100.0,
+           "latitude": 40.7128,
+           "longitude": -74.0060,
+           "city_id": "city_id_del_place",
+           "amenities_ids": ["458fbc6d-ba7d-4cea-933b-c699993205b9"]
+         }'
+
+CREATE REVIEW ❔
+--------------
+
+curl -X POST http://localhost:5000/reviews \
+     -H "Content-Type: application/json" \
+     -d '{
+           "rating": 5,
+           "user_id": "user_id_del_review",
+           "place_id": "place_id_del_review",
+           "comment": "Este lugar es increíble!"
+         }'
+
+CREATE AMENITY ✅
+--------------
+
+curl -X POST http://localhost:5000/amenities \
+     -H "Content-Type: application/json" \
+     -d '{"name": "Wifi"}'
