@@ -5,11 +5,11 @@ from models.users import Users
 from b_logic.system import System
 from p_layer import D_manager
 
-
 user_bp = Blueprint('user', __name__)
 
 
 @user_bp.route('/users', methods=['POST'])
+
 def create_user():
     data = request.get_json()
     if "@" not in data.get('email') or ".com" not in data.get('email'):
