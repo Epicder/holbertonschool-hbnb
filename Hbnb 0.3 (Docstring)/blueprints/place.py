@@ -7,9 +7,16 @@ place_bp = Blueprint('place', __name__)
 
 @place_bp.route('/places', methods=['POST'])
 def create_place():
+    """
+    Create a new place with specified amenities and details.
+
+    Returns:
+        JSON response with success message and status code.
+    """
     data = request.get_json()
     amenities = System.get_all('Amenities')
     
+    # Validate presence of specified amenity IDs in the system
     for amenity_id in data.get('amenity_ids', []):
         amenity_found = False
         for amenity in amenities:
@@ -18,6 +25,8 @@ def create_place():
                 break
         if not amenity_found:
             raise ValueError("Amenity not found!")
+    
+    # Validate required fields and conditions for the place
     if data.get('description') == "":
         raise TypeError("The place must have a description!")
     if not data.get('rooms') or data.get('rooms') <= 0:
@@ -29,48 +38,82 @@ def create_place():
     if not data.get('price_per_night') or data.get('price_per_night') <= 0:
         raise ValueError("Price per night must be positive!")
     if not data.get('latitude') or not -90 <= data.get('latitude') <= 90:
-        raise ValueError("Please enter a latitud between -90 and 90")
+        raise ValueError("Please enter a latitude between -90 and 90")
     if not data.get('longitude') or not -180 <= data.get('longitude') <= 180:
         raise ValueError("Please enter a longitude between -180 and 180")
+    
     try:
         System.create_place(data)
-        return jsonify({"Message":"Place successfully created."}), 200
+        return jsonify({"Message": "Place successfully created."}), 200
     except Exception as e:
-        return jsonify({"Message":"An error creating a place {}".format(e)}), 400
+        return jsonify({"Message": f"An error creating a place {e}"}), 400
 
 
 @place_bp.route('/places', methods=['GET'])
 def get_places():
+    """
+    Get all places.
+
+    Returns:
+        JSON response with success message, list of places, and status code.
+    """
     try:
-        place = System.get_all('Place')
-        return jsonify({"Message":"Successfully retrieved all Places.", "Place":place}), 200
+        places = System.get_all('Place')
+        return jsonify({"Message": "Successfully retrieved all Places.", "Places": places}), 200
     except:
-        return jsonify({"Message":"Places not found."}), 404
+        return jsonify({"Message": "Places not found."}), 404
     
 @place_bp.route('/places/<place_id>', methods=['GET'])
 def get_place(place_id):
+    """
+    Get a specific place by place ID.
+
+    Args:
+        place_id (str): The ID of the place to retrieve.
+
+    Returns:
+        JSON response with success message, the retrieved place, and status code.
+    """
     try:
         place = System.get(place_id, 'Place')
-        return jsonify({"Message":"Successfully retrieved place", "Place":place}), 200
+        return jsonify({"Message": "Successfully retrieved place", "Place": place}), 200
     except:
-        return jsonify({"Message":"Place not found."}), 404
+        return jsonify({"Message": "Place not found."}), 404
 
 @place_bp.route('/places/<place_id>', methods=['PUT'])
 def update_place(place_id):
+    """
+    Update an existing place.
+
+    Args:
+        place_id (str): The ID of the place to update.
+
+    Returns:
+        JSON response with success message, updated place details, and status code.
+    """
     data = request.get_json()
     try:
-        u_place = System.update(place_id, data, 'Place')
-        return jsonify({"Message":"Place Successfully updated", "Place update":u_place}), 200
+        updated_place = System.update(place_id, data, 'Place')
+        return jsonify({"Message": "Place successfully updated", "Updated Place": updated_place}), 200
     except:
         return jsonify({"Message": "Place not found"}), 404
 
 @place_bp.route('/places/<place_id>', methods=['DELETE'])
 def delete_place(place_id):
+    """
+    Delete an existing place.
+
+    Args:
+        place_id (str): The ID of the place to delete.
+
+    Returns:
+        JSON response with success message and status code.
+    """
     try:
         place = System.get(place_id, 'Place')
-        if place == None:
-            return jsonify({"Message":"Place not found."}), 404
+        if place is None:
+            return jsonify({"Message": "Place not found."}), 404
         System.delete(place_id, 'Place')
-        return jsonify({"Message":"Successfully place deleted."}), 204
+        return jsonify({"Message": "Successfully deleted place."}), 204
     except:
-        return jsonify({"Message":"Place not found."}), 404
+        return jsonify({"Message": "Place not found."}), 404

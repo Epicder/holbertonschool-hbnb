@@ -17,7 +17,6 @@ GET ID USER ✅
 -------------
 curl -X GET http://localhost:5000/users/83a3f242-1a25-4a29-8f73-3a6d249d7635
 
-
 ACTUALIZAR USER POR ID ✅
 -------------
 curl -X PUT http://localhost:5000/users/1f1b8adf-88ed-4bbc-bbb8-2b91d76d4640 \
@@ -32,17 +31,6 @@ curl -X PUT http://localhost:5000/users/1f1b8adf-88ed-4bbc-bbb8-2b91d76d4640 \
 DELETE USER POR ID ✅
 --------------
 curl -X DELETE http://localhost:5000/users/83a3f242-1a25-4a29-8f73-3a6d249d7635
-
-
-
-
-
-
-
-
-
-
-
 
 CREATE PLACE ✅
 --------------
@@ -92,18 +80,6 @@ DELETE PLACE ✅
 ------------
 curl -X DELETE http://localhost:5000/places/804ec39c-01bc-401a-99d6-e95636c169ca
 
-
-
-
-
-
-
-
-
-
-
-
-
 CREATE REVIEW ✅
 --------------
 curl -X POST http://localhost:5000/places/804ec39c-01bc-401a-99d6-e95636c169ca/reviews \
@@ -140,14 +116,6 @@ curl -X PUT -H "Content-Type: application/json" -d '{
 DELETE REVIEW ✅
 -------------
 curl -X DELETE http://localhost:5000/review/91387a1b-7629-4f05-b25f-6164bfd5c721
-
-
-
-
-
-
-
-
 
 CREATE AMENITY ✅
 --------------
