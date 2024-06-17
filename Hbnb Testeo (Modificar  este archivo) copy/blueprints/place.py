@@ -11,15 +11,16 @@ D_manager = DataManager()
 @place_bp.route('/places', methods=['POST'])
 def create_place():
     data = request.get_json()
-    amenity = System.get_all('Amenities')
+    amenities = System.get_all('Amenities')
+
     for amenity_id in data.get('amenity_ids', []):
         amenity_found = False
-        for amenity in amenity:
-            if amenity.id == amenity_id:
+        for amenity in amenities:
+            if amenity.get("id") == amenity_id:
                 amenity_found = True
                 break
-        if data.get('amenity_ids') not in amenity:
-            raise ValueError("Amenity not found!")
+    if not amenity_found:
+        raise ValueError("Amenity not found!")
     if data.get('description') == "":
         raise TypeError("The place must have a description!")
     if data.get('rooms') <= 0:
