@@ -22,3 +22,11 @@ class IPersistenceManager(ABC):
        @abstractmethod
        def delete(self, entity_id, entity_type):
            pass
+       
+       @abstractmethod
+       def get_country(self, entity_id):
+           pass
+       
+       @abstractmethod
+       def get_all_country(self):
+           pass

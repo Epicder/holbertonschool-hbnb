@@ -1,9 +1,9 @@
 {
     "Users": [
         {
-            "id": "2a3a3fe4-5676-4f58-8132-86a8d980e909",
-            "created_at": "2024-06-17T19:37:41.010531",
-            "updated_at": "2024-06-17T19:37:41.010537",
+            "id": "f1457b12-e1fa-48bb-b735-d842163feba3",
+            "created_at": "2024-06-17T20:08:00.434704",
+            "updated_at": "2024-06-17T20:08:00.434710",
             "email": "epicder11@example.com",
             "password": "iloveflask123",
             "first_name": "Elian",

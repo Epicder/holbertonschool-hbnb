@@ -23,22 +23,21 @@ class System:
             print("An error has occured, please try again!")
         place = D_manager.get(place_id, Place)
         if place and place.get('host_id') == new_review.user_id:
-            raise ValueError("User cannot review their own place")#, 409
+            raise ValueError("User cannot review their own place")
         existing_review = D_manager.get_all(new_review)
         for review in existing_review:
             if not new_review.user_id in review.get('user_id'):
-                raise ValueError("User not found!")#, 404
+                raise ValueError("User not found!")
             if new_review.user_id in review.get('id') and place_id in review.get('place_id'):
                 raise ValueError("User cannot review multiple times on the same place")
         existing_place = D_manager.get_all('Place')
         for place in existing_place:
             if not new_review.place_id in place.get('id'):
-                raise ValueError("Place not found!")#, 404
+                raise ValueError("Place not found!")
 
         D_manager.save(new_review)
 
     def create_place(data_place):
-        
         try:
             new_place = Place(
                 name = data_place.get('name'),
@@ -93,6 +92,14 @@ class System:
             )
         except Exception:
             return jsonify({"Message":"Failed to create City."}), 400
+        countries = D_manager.get_all_country()
+        for country in countries:
+            country_found = False
+            if country.get("alpha-2") == new_city.county_code:
+                country_found = True
+                break
+        if not country_found:
+            raise ValueError("Country not exist!")
         try:
             D_manager.save(new_city)
             return jsonify({"Message":"City succsessfuly created."}), 201
@@ -111,3 +118,9 @@ class System:
     
     def get_all(entity_type):
         return D_manager.get_all(entity_type)
+    
+    def get_all_countries():
+        return D_manager.get_all_country()
+    
+    def get_country(entity_id):
+        return D_manager.get_country(entity_id)
