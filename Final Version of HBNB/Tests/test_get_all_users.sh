@@ -1,8 +1,8 @@
 #!/bin/bash
 
-python run.py & sleep 5
+python3 ../wsgi.py & sleep 1
 
-URL="http://localhost:5000/users"
+URL="http://localhost:8000/users"
 
 curl -X GET $URL \
 -H "Content-Type: application/json"

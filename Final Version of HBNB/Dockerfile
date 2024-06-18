@@ -1,6 +1,6 @@
 FROM python:3.9-alpine
 
-WORKDIR /Hbnb 1.0
+WORKDIR /Final Version of HBNB
 
 COPY requirements.txt ./
 
