@@ -3,13 +3,12 @@
 from flask import Blueprint, request, jsonify
 from models.users import Users
 from b_logic.system import System
-from p_layer import D_manager
+
 
 user_bp = Blueprint('user', __name__)
 
 
 @user_bp.route('/users', methods=['POST'])
-
 def create_user():
     data = request.get_json()
     if "@" not in data.get('email') or ".com" not in data.get('email'):
@@ -28,7 +27,7 @@ def create_user():
     
 
 @user_bp.route('/users', methods=['GET'])
-def getall_users():
+def get_users():
     try:
         users = System.get_all('Users')
         return jsonify({"Message":"Successfully retrieved  all user.", "Users":users}), 200
@@ -48,7 +47,7 @@ def update_user(user_id):
     data = request.get_json()
     try:
         System.update(user_id, data, 'Users')
-        return jsonify({"Message":"User Successfully updated"}), 204
+        return jsonify({"Message":"User Successfully updated"}), 200
     except:
         return jsonify({"Message": "User not found"}), 404
 
