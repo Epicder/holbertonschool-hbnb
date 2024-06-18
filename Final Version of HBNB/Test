@@ -1,3 +1,7 @@
+
+USERS
+-----
+
 POST USER ✅
 -----------
 curl -X POST http://localhost:5000/users \
@@ -35,14 +39,8 @@ curl -X DELETE http://localhost:5000/users/83a3f242-1a25-4a29-8f73-3a6d249d7635
 
 
 
-
-
-
-
-
-
-
-
+PLACES
+------
 
 CREATE PLACE ✅
 --------------
@@ -94,15 +92,8 @@ curl -X DELETE http://localhost:5000/places/804ec39c-01bc-401a-99d6-e95636c169ca
 
 
 
-
-
-
-
-
-
-
-
-
+REVIEW
+------
 
 CREATE REVIEW ✅
 --------------
@@ -144,11 +135,8 @@ curl -X DELETE http://localhost:5000/review/91387a1b-7629-4f05-b25f-6164bfd5c721
 
 
 
-
-
-
-
-
+AMENITIES
+---------
 CREATE AMENITY ✅
 --------------
 
