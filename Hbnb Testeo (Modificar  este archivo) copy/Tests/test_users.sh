@@ -50,7 +50,6 @@ user=$(create_user)
 ID=$(echo $user | python3 -m json.tool | grep -o '"id": *"[^"]*"' | cut -d '"' -f 1| paste)
 
 echo "retured id: $ID"
-#create_user
 get_user $ID
 get_users
 update_user $ID

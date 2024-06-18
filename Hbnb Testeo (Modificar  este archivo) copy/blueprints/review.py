@@ -20,8 +20,8 @@ def create_place_review(place_id):
     if not place_id:
         raise ValueError("Must enter a place id")
     try:
-        System.create_review(place_id, data)
-        return jsonify({"Message":"Review successfully created."}), 200
+        review = System.create_review(place_id, data)
+        return jsonify(review), 200
     except Exception as e:
         return jsonify({f"Message":"An error creating a review {e}"}), 404
 
@@ -33,7 +33,7 @@ def get_user_review(user_id):
             for review in all_reviews:
                 if review['user_id'] == user_id:
                     reviews.append(review)
-            return jsonify({"Message": "Successfully retrieved user reviews.", "Reviews": reviews}), 200
+            return jsonify(reviews), 200
         except Exception as e:
             return jsonify({"Message":f"User not found.{e}"}), 404
 
@@ -45,7 +45,7 @@ def get_place_review(place_id):
         for review in all_reviews:
             if review['place_id'] == place_id:
                 reviews.append(review)
-        return jsonify({"Message": "Successfully retrieved place reviews.", "Reviews": reviews}), 200
+        return jsonify(reviews), 200
     except Exception as e:
         return jsonify({"Message":f"User not found. {e}"}), 404
 
@@ -57,7 +57,7 @@ def get_review(review_id):
         for review in all_reviews:
             if review['id'] == review_id:
                 reviews.append(review)
-        return jsonify({"Message":"Successfully retrieved review.", "Reviews":review}), 200
+        return jsonify(review), 200
     except Exception as e:
         return jsonify({"Message":f"Review not found. {e}"}), 404
 
@@ -66,7 +66,7 @@ def update_review(review_id):
     data = request.get_json()
     try:
         review = System.update(review_id, data, 'Reviews')
-        return jsonify({"Message":"Review Successfully updated", "Reviews":review}), 200
+        return jsonify(review), 200
     except:
         return jsonify({"Message": "Review not found"}), 404
 

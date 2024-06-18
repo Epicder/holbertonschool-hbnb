@@ -13,15 +13,13 @@ def create_user():
     data = request.get_json()
     if "@" not in data.get('email') or ".com" not in data.get('email'):
         raise ValueError("Email, not valid!")
-    if not data.get('password'):
-        raise ValueError("Password not valid, try a new one!")
     if not data.get('first_name'):
         raise ValueError("First Name not valid, try a new one!")
     if not data.get('last_name'):
         raise ValueError("Last Name not valid, try a new one!")
     try:
-        System.create_user(data)
-        return jsonify({"Message":"User succsessfuly created."}), 201
+        user = System.create_user(data)
+        return jsonify(user), 201
     except Exception:
         return jsonify({"Message":"Failed to create User."}), 400
     
@@ -30,7 +28,7 @@ def create_user():
 def get_users():
     try:
         users = System.get_all('Users')
-        return jsonify({"Message":"Successfully retrieved  all user.", "Users":users}), 200
+        return jsonify(users), 200
     except:
         return jsonify({"Message":"User not found."}), 404
 
@@ -38,7 +36,7 @@ def get_users():
 def get_user(user_id):
     try:
         user = System.get(user_id, 'Users')
-        return jsonify({"Message":"Successfully retrieved user.", "Users":user}), 200
+        return jsonify(user), 200
     except:
         return jsonify({"Message":"User not found."}), 404
 
@@ -46,8 +44,8 @@ def get_user(user_id):
 def update_user(user_id):
     data = request.get_json()
     try:
-        System.update(user_id, data, 'Users')
-        return jsonify({"Message":"User Successfully updated"}), 200
+        updated = System.update(user_id, data, 'Users')
+        return jsonify(updated), 200
     except:
         return jsonify({"Message": "User not found"}), 404
 

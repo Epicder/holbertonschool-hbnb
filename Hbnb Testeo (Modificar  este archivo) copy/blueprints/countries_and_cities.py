@@ -9,7 +9,7 @@ country_bp = Blueprint('country', __name__)
 def get_countries():
     try:
         countries = System.get_all_countries()
-        return jsonify({"Message":"Successfully retrieved all Countries.", "Countries":countries}), 200
+        return jsonify(countries), 200
     except:
         return jsonify({"Message":"Countries not found."}), 404
 
@@ -19,7 +19,7 @@ def get_country(country_code):
         raise ValueError("Code not valid!")
     try:
         country = System.get_country(country_code)
-        return jsonify({"Message":"Successfully retrieved Country", "Place":country}), 200
+        return jsonify(country), 200
     except:
         return jsonify({"Message":"Country not found."}), 404
 
@@ -33,7 +33,7 @@ def get_country_cities(country_code):
                 city_list.append(city)
         if not city_list:
             raise ValueError(f"There are no citys from {country_code} country")
-        return jsonify({"Message":"Successfully retrieved all citys","Contry":country_code, "Citys":city_list}), 200
+        return jsonify(city_list), 200
     except:
         return jsonify({"Message":"Citys not found."}), 404
 
@@ -45,8 +45,8 @@ def create_city():
     if not data.get("country_code"):
         raise ValueError("Contry code not valid!")
     try:
-        System.create_city(data)
-        return jsonify({"Message":"City succsessfuly created."}), 201
+        city = System.create_city(data)
+        return jsonify(city), 201
     except Exception:
         return jsonify({"Message":"Failed to create City."}), 400
 
@@ -54,7 +54,7 @@ def create_city():
 def get_cities():
     try:
         cities = System.get_all('City')
-        return jsonify({"Message":"Successfully retrieved all citys.", "Citys":cities}), 200
+        return jsonify(cities), 200
     except:
         return jsonify({"Message":"Citys not found."}), 404
 
@@ -64,7 +64,7 @@ def get_city(city_id):
         raise ValueError("Id not valid!")
     try:
         city = System.get(city_id, 'City')
-        return jsonify({"Message":"Successfully retrieved city.", "City":city}), 200
+        return jsonify(city), 200
     except:
         return jsonify({"Message":"City not found."}), 404
 
@@ -78,8 +78,8 @@ def update_city(city_id):
     if not city_id:
         raise ValueError("Id not valid!")
     try:
-        System.update(city_id, data, 'City')
-        return jsonify({"Message":"City Successfully updated"}), 200
+        updated = System.update(city_id, data, 'City')
+        return jsonify(updated), 200
     except:
         return jsonify({"Message": "City not found"}), 404
 

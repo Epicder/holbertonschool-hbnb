@@ -10,8 +10,8 @@ amenity_bp = Blueprint('amenity', __name__)
 def create_amenity():
     data = request.get_json()
     try:
-        System.create_amenities(data)
-        return jsonify({"Message":"Amenity successfully created."}), 201
+        amen = System.create_amenities(data)
+        return jsonify(amen), 201
     except Exception as e:
         return jsonify({f"Message":"An error creating an Amenity {e}"}), 404
 
@@ -19,7 +19,7 @@ def create_amenity():
 def get_amenities():
     try:
         amenity = System.get_all('Amenities')
-        return jsonify({"Message":"Successfully retrieved amenities.", "Amenities":amenity}), 200
+        return jsonify(amenity), 200
     except:
         return jsonify({"Message":"Amenity not found."}), 404
 
@@ -27,7 +27,7 @@ def get_amenities():
 def get_amenity(amenity_id):
     try:
         amenity = System.get(amenity_id, 'Amenities')
-        return jsonify({"Message":"Successfully retrieved amenity.", "Amenities":amenity}), 200
+        return jsonify(amenity), 200
     except:
         return jsonify({"Message":"User not found."}), 404
     
@@ -35,8 +35,8 @@ def get_amenity(amenity_id):
 def update_amenity(amenity_id):
     data = request.get_json()
     try:
-        System.update(amenity_id, data, 'Amenities')
-        return jsonify({"Message":"Amenity Successfully updated"}), 200
+        updated = System.update(amenity_id, data, 'Amenities')
+        return jsonify(updated), 200
     except:
         return jsonify({"Message": "User not found"}), 404
     

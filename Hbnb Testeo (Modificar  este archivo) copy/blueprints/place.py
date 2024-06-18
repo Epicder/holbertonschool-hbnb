@@ -33,8 +33,8 @@ def create_place():
     if not data.get('longitude') or not -180 <= data.get('longitude') <= 180:
         raise ValueError("Please enter a longitude between -180 and 180")
     try:
-        System.create_place(data)
-        return jsonify({"Message":"Place successfully created."}), 200
+        place = System.create_place(data)
+        return jsonify(place), 200
     except Exception as e:
         return jsonify({"Message":"An error creating a place {}".format(e)}), 400
 
@@ -43,7 +43,7 @@ def create_place():
 def get_places():
     try:
         place = System.get_all('Place')
-        return jsonify({"Message":"Successfully retrieved all Places.", "Place":place}), 200
+        return jsonify(place), 200
     except:
         return jsonify({"Message":"Places not found."}), 404
     
@@ -51,7 +51,7 @@ def get_places():
 def get_place(place_id):
     try:
         place = System.get(place_id, 'Place')
-        return jsonify({"Message":"Successfully retrieved place", "Place":place}), 200
+        return jsonify(place), 200
     except:
         return jsonify({"Message":"Place not found."}), 404
 
@@ -60,7 +60,7 @@ def update_place(place_id):
     data = request.get_json()
     try:
         u_place = System.update(place_id, data, 'Place')
-        return jsonify({"Message":"Place Successfully updated", "Place update":u_place}), 200
+        return jsonify(u_place), 200
     except:
         return jsonify({"Message": "Place not found"}), 404
 
