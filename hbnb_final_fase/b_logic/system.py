@@ -20,7 +20,7 @@ class System:
                 rating = data_review.get('rating')
             )
         except Exception:
-            print("An error has occured, please try again!")
+            return jsonify({"Message":"Failed to create review."}), 400
         place = D_manager.get(place_id, Place)
         if place and place.get('host_id') == new_review.user_id:
             raise ValueError("User cannot review their own place")
@@ -36,6 +36,7 @@ class System:
                 raise ValueError("Place not found!")
 
         D_manager.save(new_review)
+        return new_review.__dict__
 
     def create_place(data_place):
         try:
@@ -56,15 +57,15 @@ class System:
             return jsonify({"Message":"Failed to create Place."}), 400
         
         D_manager.save(new_place)
+        return new_place.__dict__
 
     def create_amenities(data_amenities):
         try:
             new_amenity = Amenities(
                 name = data_amenities.get('name')
-                )
+            )
         except Exception:
             return jsonify({"Message":"Failed to create Amenity."}), 400
-        
         D_manager.save(new_amenity)
 
     def create_user(data_user):
@@ -82,7 +83,8 @@ class System:
                 raise ValueError("Email already exist!")
             
         D_manager.save(new_user)
-    
+        return new_user.__dict__
+
     def create_city(data_city):
         try:
             new_city = City(
@@ -99,14 +101,11 @@ class System:
                 break
         if not country_found:
             raise ValueError("Country not exist!")
-        try:
-            D_manager.save(new_city)
-            return jsonify({"Message":"City succsessfuly created."}), 201
-        except Exception:
-            return jsonify({"Message":"Failed to create City."}), 400
+        D_manager.save(new_city)
+        return new_city.__dict__
 
     def update(entity_id, entity, entity_type):
-        D_manager.update(entity_id, entity, entity_type)
+       return D_manager.update(entity_id, entity, entity_type)
     
     def delete(entity_id, entity_type): 
         D_manager.get(entity_id, entity_type)

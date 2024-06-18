@@ -43,8 +43,6 @@ class DataManager(IPersistenceManager):
             entity_list = self.data_lists[class_name]
             for entity in entity_list:
                 if entity.get('id') == entity_id:
-                    #entity['created_at'] = datetime.fromisoformat(entity['created_at'])
-                    #entity['updated_at'] = datetime.fromisoformat(entity['updated_at'])
                     return entity
 
     def get_all(self, entity_type):
@@ -85,6 +83,7 @@ class DataManager(IPersistenceManager):
                     file.write(json.dumps(self.data_lists, indent=4))
             except FileNotFoundError:
                 return jsonify("File not found"), 404
+            return item
 
     def get_all_country(self):
         try:

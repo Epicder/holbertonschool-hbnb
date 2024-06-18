@@ -1,30 +1,25 @@
-
-USERS
------
-
 POST USER ✅
 -----------
-curl -X POST http://localhost:5000/users \
+curl -X POST http://localhost:4000/users \
 -H "Content-Type: application/json" \
 -d '{
-  "email": "NEKA@example.com",
-  "password": "iloveflask123",
+  "email": "NEKasdsdaA@example.com",
   "first_name": "Ignacio",
   "last_name": "Necasek"
 }'
 
 GET ALL USERS ✅
 -------------
-curl -X GET http://localhost:5000/users
+curl -X GET http://localhost:4000/users
 
 GET ID USER ✅
 -------------
-curl -X GET http://localhost:5000/users/83a3f242-1a25-4a29-8f73-3a6d249d7635
+curl -X GET http://localhost:4000/users/63a05307-c018-470d-80be-75c54c6f1f1f
 
 
 ACTUALIZAR USER POR ID ✅
 -------------
-curl -X PUT http://localhost:5000/users/1f1b8adf-88ed-4bbc-bbb8-2b91d76d4640 \
+curl -X PUT http://localhost:4000/users/63a05307-c018-470d-80be-75c54c6f1f1f \
 -H "Content-Type: application/json" \
 -d '{
   "email": "Nekosouwu@example.com",
@@ -35,16 +30,22 @@ curl -X PUT http://localhost:5000/users/1f1b8adf-88ed-4bbc-bbb8-2b91d76d4640 \
 
 DELETE USER POR ID ✅
 --------------
-curl -X DELETE http://localhost:5000/users/83a3f242-1a25-4a29-8f73-3a6d249d7635
+curl -X DELETE http://localhost:4000/users/63a05307-c018-470d-80be-75c54c6f1f1f
 
 
 
-PLACES
-------
+
+
+
+
+
+
+
+
 
 CREATE PLACE ✅
 --------------
-curl -X POST http://localhost:5000/places \
+curl -X POST http://localhost:4000/places \
      -H "Content-Type: application/json" \
      -d '{
            "name": "Casita primer cerdito",
@@ -62,15 +63,15 @@ curl -X POST http://localhost:5000/places \
 
 GET ALL PLACES ✅
 --------------
-curl -X GET http://localhost:5000/places
+curl -X GET http://localhost:4000/places
 
 GET A PLACE ✅
 -----------
-curl -X GET http://localhost:5000/places/804ec39c-01bc-401a-99d6-e95636c169ca
+curl -X GET http://localhost:4000/places/804ec39c-01bc-401a-99d6-e95636c169ca
 
 UPDATE PLACE ✅
 ------------
-curl -X PUT http://localhost:5000/places/804ec39c-01bc-401a-99d6-e95636c169ca \
+curl -X PUT http://localhost:4000/places/804ec39c-01bc-401a-99d6-e95636c169ca \
      -H "Content-Type: application/json" \
      -d '{
            "name": "casita ultimo cerdito",
@@ -88,16 +89,23 @@ curl -X PUT http://localhost:5000/places/804ec39c-01bc-401a-99d6-e95636c169ca \
 
 DELETE PLACE ✅
 ------------
-curl -X DELETE http://localhost:5000/places/804ec39c-01bc-401a-99d6-e95636c169ca
+curl -X DELETE http://localhost:4000/places/804ec39c-01bc-401a-99d6-e95636c169ca
 
 
 
-REVIEW
-------
+
+
+
+
+
+
+
+
+
 
 CREATE REVIEW ✅
 --------------
-curl -X POST http://localhost:5000/places/804ec39c-01bc-401a-99d6-e95636c169ca/reviews \
+curl -X POST http://localhost:4000/places/804ec39c-01bc-401a-99d6-e95636c169ca/reviews \
      -H "Content-Type: application/json" \
      -d '{
            "rating": 5,
@@ -106,15 +114,15 @@ curl -X POST http://localhost:5000/places/804ec39c-01bc-401a-99d6-e95636c169ca/r
          }'
 GET USER REVIEW ✅
 ---------------
-curl -X GET "http://localhost:5000/users/83a3f242-1a25-4a29-8f73-3a6d249d7635/reviews" -H "Content-Type: application/json"
+curl -X GET "http://localhost:4000/users/83a3f242-1a25-4a29-8f73-3a6d249d7635/reviews" -H "Content-Type: application/json"
 
 GET PLACE REVIEW ✅
 ----------------
-curl -X GET http://localhost:5000/place/804ec39c-01bc-401a-99d6-e95636c169ca/reviews
+curl -X GET http://localhost:4000/place/804ec39c-01bc-401a-99d6-e95636c169ca/reviews
 
 GET REVIEW ✅
 ----------
-curl -X GET http://localhost:5000/review/bf95c142-8647-4e28-9201-f6008d50167d
+curl -X GET http://localhost:4000/review/bf95c142-8647-4e28-9201-f6008d50167d
 
 UPDATE REVIEW ✅
 -------------
@@ -126,35 +134,38 @@ curl -X PUT -H "Content-Type: application/json" -d '{
     "user_id": "83a3f242-1a25-4a29-8f73-3a6d249d7635",
     "place_id": "804ec39c-01bc-401a-99d6-e95636c169ca",
     "comment": "Este lugar es asombroso! Ahora es aún mejor."
-}' http://LOCALHOST:5000/review/502d9d09-dbe9-42f0-9774-768daef11b0d
+}' http://LOCALHOST:4000/review/502d9d09-dbe9-42f0-9774-768daef11b0d
 
 DELETE REVIEW ✅
 -------------
-curl -X DELETE http://localhost:5000/review/91387a1b-7629-4f05-b25f-6164bfd5c721
+curl -X DELETE http://localhost:4000/review/91387a1b-7629-4f05-b25f-6164bfd5c721
 
 
 
 
-AMENITIES
----------
+
+
+
+
+
 CREATE AMENITY ✅
 --------------
 
-curl -X POST http://localhost:5000/amenities \
+curl -X POST http://localhost:4000/amenities \
      -H "Content-Type: application/json" \
      -d '{"name": "Pc-Gamer"}'
 
 GET ALL AMENITIES ✅
 -----------------
-curl -X GET http://localhost:5000/amenities
+curl -X GET http://localhost:4000/amenities
 
 GET AMENITY ✅
 -----------
-curl -X GET http://localhost:5000/amenities/acc39ebd-cca8-4753-9ede-dd1e79508ccd
+curl -X GET http://localhost:4000/amenities/acc39ebd-cca8-4753-9ede-dd1e79508ccd
 
 UPDATE AMENITY ✅
 --------------
-curl -X PUT http://localhost:5000/amenities/acc39ebd-cca8-4753-9ede-dd1e79508ccd \
+curl -X PUT http://localhost:4000/amenities/acc39ebd-cca8-4753-9ede-dd1e79508ccd \
      -H "Content-Type: application/json" \
      -d '{
            "name": "Peluchito de ONE-PUNCH"
@@ -162,4 +173,4 @@ curl -X PUT http://localhost:5000/amenities/acc39ebd-cca8-4753-9ede-dd1e79508ccd
 
 DELETE AMENITY ✅
 --------------
-curl -X DELETE http://localhost:5000/amenities/acc39ebd-cca8-4753-9ede-dd1e79508ccd
+curl -X DELETE http://localhost:4000/amenities/acc39ebd-cca8-4753-9ede-dd1e79508ccd

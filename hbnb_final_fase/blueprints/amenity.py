@@ -10,8 +10,8 @@ amenity_bp = Blueprint('amenity', __name__)
 def create_amenity():
     data = request.get_json()
     try:
-        amen = System.create_amenities(data)
-        return jsonify(amen), 201
+        amenity = System.create_amenities(data)
+        return jsonify(amenity), 201
     except Exception as e:
         return jsonify({f"Message":"An error creating an Amenity {e}"}), 404
 

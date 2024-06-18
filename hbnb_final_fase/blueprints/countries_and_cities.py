@@ -9,7 +9,7 @@ country_bp = Blueprint('country', __name__)
 def get_countries():
     try:
         countries = System.get_all_countries()
-        return jsonify(countries), 200
+        return jsonify({"Message":"Successfully retrieved all Countries.", "Countries":countries}), 200
     except:
         return jsonify({"Message":"Countries not found."}), 404
 
@@ -19,7 +19,7 @@ def get_country(country_code):
         raise ValueError("Code not valid!")
     try:
         country = System.get_country(country_code)
-        return jsonify(country), 200
+        return jsonify({"Message":"Successfully retrieved Country", "Place":country}), 200
     except:
         return jsonify({"Message":"Country not found."}), 404
 
@@ -33,7 +33,7 @@ def get_country_cities(country_code):
                 city_list.append(city)
         if not city_list:
             raise ValueError(f"There are no citys from {country_code} country")
-        return jsonify(city_list), 200
+        return jsonify({"Message":"Successfully retrieved all citys","Contry":country_code, "Citys":city_list}), 200
     except:
         return jsonify({"Message":"Citys not found."}), 404
 
@@ -78,8 +78,8 @@ def update_city(city_id):
     if not city_id:
         raise ValueError("Id not valid!")
     try:
-        updated = System.update(city_id, data, 'City')
-        return jsonify(updated), 200
+        city = System.update(city_id, data, 'City')
+        return jsonify(city), 200
     except:
         return jsonify({"Message": "City not found"}), 404
 
