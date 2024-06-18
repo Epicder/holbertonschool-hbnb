@@ -20,7 +20,7 @@ class System:
                 rating = data_review.get('rating')
             )
         except Exception:
-            return jsonify({"Message":"Failed to create review."}), 400
+            print("An error has occured, please try again!")
         place = D_manager.get(place_id, Place)
         if place and place.get('host_id') == new_review.user_id:
             raise ValueError("User cannot review their own place")
@@ -61,9 +61,10 @@ class System:
         try:
             new_amenity = Amenities(
                 name = data_amenities.get('name')
-            )
+                )
         except Exception:
             return jsonify({"Message":"Failed to create Amenity."}), 400
+        
         D_manager.save(new_amenity)
 
     def create_user(data_user):
