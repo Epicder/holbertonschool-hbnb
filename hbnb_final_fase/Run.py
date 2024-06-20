@@ -15,3 +15,6 @@ app.register_blueprint(country_bp)
 app.register_blueprint(place_bp)
 app.register_blueprint(review_bp)
 app.register_blueprint(amenity_bp)
+
+if __name__ == "__main__":
+    app.run()
